@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="CPU.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="20" topLine="0" />
+	</File>
+	<File name="CPU.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="5175" topLine="258" />
+	</File>
+	<File name="GPU.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="7638" topLine="306" />
+	</File>
+	<File name="GPU.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="104" topLine="33" />
+	</File>
+	<File name="Memory.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="44" topLine="0" />
+	</File>
+	<File name="Memory.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="87" topLine="0" />
+	</File>
+	<File name="Rom.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="41" topLine="0" />
+	</File>
+	<File name="Rom.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="927" topLine="19" />
+	</File>
+	<File name="Window.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="2891" topLine="100" />
+	</File>
+	<File name="Window.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="154" topLine="0" />
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="843" topLine="45" />
+	</File>
+</CodeBlocks_layout_file>
