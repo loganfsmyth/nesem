@@ -1,4 +1,4 @@
-#include "CPU.hpp"
+#include "cpu.hpp"
 
 using namespace std;
 

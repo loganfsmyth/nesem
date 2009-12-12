@@ -3,8 +3,8 @@
 
 #include <cstdint>
 #include <iostream>
-#include "Window.hpp"
-#include "Rom.hpp"
+#include "window.hpp"
+#include "rom.hpp"
 
 
 #define GPU_REG_CTRL		0

@@ -2,8 +2,8 @@
 #define INCLUDE_MEMORY_H
 
 #include <cstdint>
-#include "Rom.hpp"
-#include "GPU.hpp"
+#include "rom.hpp"
+#include "gpu.hpp"
 
 
 #define MEMORY_LOAD_ERROR	0

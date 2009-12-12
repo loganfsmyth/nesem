@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include "window.hpp"
 
 using namespace std;
 
@@ -36,7 +36,7 @@ void Window::registerLoopHook(void (*hook_ptr)()){
 }
 
 void Window::executeLoopHooks(){
-    int i;
+    unsigned int i;
     for(i = 0; i < loop_hooks.size(); i++){
         loop_hooks[i]();
     }

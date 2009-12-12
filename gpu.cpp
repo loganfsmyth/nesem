@@ -1,5 +1,5 @@
 
-#include "GPU.hpp"
+#include "gpu.hpp"
 
 using namespace std;
 
