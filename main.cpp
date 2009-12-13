@@ -1,10 +1,16 @@
 
 #include <SDL/SDL.h>
+#include <iostream>
+#include <boost/program_options.hpp>
 
 #include "rom.hpp"
 #include "memory.hpp"
 #include "cpu.hpp"
 #include "window.hpp"
+
+#define NESEM_DEFAULT_FPS 30
+
+using namespace std;
 
 
 Rom *r;
@@ -13,13 +19,17 @@ GPU *gpu;
 Window *win;
 CPU *cpu;
 
-
+bool process_args(int argc, char** argv, string &filename);
 void main_loop();
 
 int main ( int argc, char** argv ){
+  string filename;
+  
+  if(!process_args(argc, argv, filename)) return 1;
+  
   
   r = new Rom();
-  r->load(argv[1]);
+  r->load(filename);
   r->print_stats();
 
   mem = new Memory();
@@ -74,4 +84,51 @@ void main_loop(){
 
 
 
+}
+
+bool process_args(int argc, char** argv, string &filename) {
+  
+  namespace po = boost::program_options;
+  
+  
+  po::options_description general("General options");
+  general.add_options()
+    ("version,v", "print version string")
+    ("help,?", "display help message");
+  
+  po::options_description config("Config options");
+  config.add_options()
+    ("fps,f", po::value<int>()->default_value(NESEM_DEFAULT_FPS), "set frames per second maximum");
+  
+  po::options_description hidden("Hidden options");
+  hidden.add_options()
+    ("filename", po::value<string>(),"set  file name");
+  
+  po::options_description config_opts;
+  config_opts.add(general).add(config).add(hidden);
+  po::options_description visible_opts("NESEM Configuration options");
+  visible_opts.add(general).add(config);
+  
+  po::positional_options_description p;
+  p.add("filename", -1);
+  
+  po::variables_map vm;
+  po::store(po::command_line_parser(argc, argv).options(config_opts).positional(p).run(), vm);
+  //~ po::store(po::command_line_parser(argc, argv).options(visible_opts).positional(p).run(), vm);
+  po::notify(vm);
+  
+  if(vm.count("help")) {
+    cout << visible_opts << "\n";
+    return false;
+  }
+  else if(vm.count("filename")) {
+    filename = vm["filename"].as<string>();
+    cout << "Loading file " << filename << endl;
+  }
+  else {
+    cout << "No filename specified" << endl << endl;
+    return false;
+  }
+  
+  return true;
 }

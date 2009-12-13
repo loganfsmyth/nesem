@@ -3,7 +3,7 @@ EXEC_NAME = nesem
 
 	
 compile: main.o rom.o cpu.o memory.o gpu.o window.o main.o
-	g++ main.o rom.o cpu.o memory.o gpu.o window.o -o ${EXEC_NAME} ${OPTIONS} -lSDL
+	g++ main.o rom.o cpu.o memory.o gpu.o window.o -o ${EXEC_NAME} ${OPTIONS} -lSDL -lboost_program_options-mt
 	
 main.o: main.cpp
 	g++ -c main.cpp ${OPTIONS}
