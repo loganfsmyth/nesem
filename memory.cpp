@@ -4,16 +4,16 @@ using namespace std;
 
 
 Memory::Memory(){
-	rom = NULL;
+  
 }
 Memory::~Memory(){
 
 }
-int Memory::load(Rom* r){
+int Memory::load(boost::shared_ptr<Rom> r){
 	rom = r;
 	return MEMORY_LOAD_SUCCESS;
 }
-void Memory::setGPU(GPU* g){
+void Memory::setGPU(boost::shared_ptr<GPU> g){
 	gpu = g;
 }
 int Memory::write(uint16_t location, uint8_t data){

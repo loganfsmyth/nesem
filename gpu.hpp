@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <boost/smart_ptr.hpp>
 #include "window.hpp"
 #include "rom.hpp"
 
@@ -35,8 +36,8 @@ class GPU{
 
 		uint8_t mem_read(uint16_t location);
 		void mem_write(uint16_t location, uint8_t data);
-		void setWindow(Window* w);
-		void setCHRRom(Rom* r);
+		void setWindow(boost::shared_ptr<Window> w);
+		void setCHRRom(boost::shared_ptr<Rom> r);
 
 
 		int executeCycle();
@@ -68,8 +69,8 @@ class GPU{
 
 		uint8_t offset_x;
 
-		Window* win;
-		Rom* rom;
+		boost::shared_ptr<Window> win;
+		boost::shared_ptr<Rom> rom;
 
 		uint8_t pix_count;
 

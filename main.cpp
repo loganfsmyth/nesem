@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include <iostream>
 #include <boost/program_options.hpp>
+#include <boost/smart_ptr.hpp>
 
 #include "rom.hpp"
 #include "memory.hpp"
@@ -13,11 +14,11 @@
 using namespace std;
 
 
-Rom *r;
-Memory *mem;
-GPU *gpu;
-Window *win;
-CPU *cpu;
+boost::shared_ptr<Rom> r;
+boost::shared_ptr<Memory> mem;
+boost::shared_ptr<GPU> gpu;
+boost::shared_ptr<Window> win;
+boost::shared_ptr<CPU> cpu;
 
 bool process_args(int argc, char** argv, string &filename);
 void main_loop();
@@ -28,24 +29,24 @@ int main ( int argc, char** argv ){
   if(!process_args(argc, argv, filename)) return 1;
   
   
-  r = new Rom();
+  r.reset(new Rom());
   r->load(filename);
   r->print_stats();
 
-  mem = new Memory();
+  mem.reset(new Memory());
   mem->load(r);
 
-  gpu = new GPU();
+  gpu.reset(new GPU());
   gpu->setCHRRom(r);
   mem->setGPU(gpu);
 
 
-  win = new Window(512, 480);
+  win.reset(new Window(512, 480));
   gpu->setWindow(win);
   //	win->registerExitHook(&nesem_exit);
 
 
-  cpu = new CPU();
+  cpu.reset(new CPU());
   cpu->setMemory(mem);
 
 
@@ -53,14 +54,6 @@ int main ( int argc, char** argv ){
 
 
     win->main_loop();
-
-
-
-    delete cpu;
-    delete win;
-    delete gpu;
-    delete mem;
-    delete r;
 
     // all is well ;)
     printf("Exited cleanly\n");

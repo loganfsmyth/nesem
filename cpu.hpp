@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <boost/smart_ptr.hpp>
 #include "memory.hpp"
 
 
@@ -260,7 +261,7 @@ class CPU{
 
 
 		int executeInst();
-		void setMemory(Memory* m);
+		void setMemory(boost::shared_ptr<Memory> m);
 		void reset();
 		void trigger_interrupt();
 		void raise_interrupt();
@@ -283,7 +284,7 @@ class CPU{
 		uint8_t SP, SR;
 		uint16_t PC;
 
-		Memory* mem;
+		boost::shared_ptr<Memory> mem;
 
 		bool interrupt_status, interrupt_status_last;
 

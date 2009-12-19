@@ -19,10 +19,10 @@ GPU::GPU(){
 GPU::~GPU(){
 
 }
-void GPU::setWindow(Window* w){
+void GPU::setWindow(boost::shared_ptr<Window> w){
 	win = w;
 }
-void GPU::setCHRRom(Rom* r){
+void GPU::setCHRRom(boost::shared_ptr<Rom> r){
 	rom = r;
 
 

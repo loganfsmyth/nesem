@@ -23,7 +23,7 @@ void CPU::reset(){
 	PC = mem->read(0xFFFC) | (mem->read(0xFFFD) << 8);
 }
 
-void CPU::setMemory(Memory* m){
+void CPU::setMemory(boost::shared_ptr<Memory> m){
 	mem = m;
 	PC = mem->read(0xFFFC) | (mem->read(0xFFFD) << 8);
 
