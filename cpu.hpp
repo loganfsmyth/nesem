@@ -249,50 +249,47 @@
 #define PULL() bus->read(((++SP) & 0xFF) + 0x100)
 
 struct instruction_info{
-	int length;
-	int type;
-	int time;
-	char plus;
+  int length;
+  int type;
+  int time;
+  char plus;
 };
 
 class CPU{
-	public:
-		CPU(boost::shared_ptr<Bus> b);
-		~CPU();
+  public:
+    CPU(boost::shared_ptr<Bus> b);
+    ~CPU();
 
 
-		int executeInst();
-		void reset();
-		void trigger_interrupt();
-		void raise_interrupt();
-		void drop_interrupt();
+    int executeInst();
+    void reset();
+    void trigger_interrupt();
+    void raise_interrupt();
+    void drop_interrupt();
 
-//		void write(int type, uint16_t addr, uint8_t arg1, uint8_t arg2, uint8_t data);
-		void write(int type,  uint8_t arg1, uint8_t arg2, uint8_t data);
-//		uint8_t read(int type, uint16_t addr, uint8_t arg1, uint8_t arg2, uint8_t data);
-		uint8_t read(int type, uint8_t arg1, uint8_t arg2);
-//		uint16_t get_address(int type, uint8_t arg1, uint8_t arg2);
-		void print_stack();
+    void write(int type,  uint8_t arg1, uint8_t arg2, uint8_t data);
+    uint8_t read(int type, uint8_t arg1, uint8_t arg2);
+    void print_stack();
 
-		void print_trace();
+    void print_trace();
 
-		std::string get_inst_str(int inst);
+    std::string get_inst_str(int inst);
 
-	private:
-		std::vector<std::string> trace;
-		uint8_t XR,YR,AC;
-		uint8_t SP, SR;
-		uint16_t PC;
+  private:
+    std::vector<std::string> trace;
+    uint8_t XR,YR,AC;
+    uint8_t SP, SR;
+    uint16_t PC;
 
-		boost::shared_ptr<Bus> bus;
+    boost::shared_ptr<Bus> bus;
 
-		bool interrupt_status, interrupt_status_last;
+    bool interrupt_status, interrupt_status_last;
 
-		struct instruction_info get_instruction_info(uint8_t inst);
+    struct instruction_info get_instruction_info(uint8_t inst);
 
 
 
-};
+  };
 
 
 #endif
