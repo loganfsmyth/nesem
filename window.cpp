@@ -103,41 +103,20 @@ void Window::flip(){
 }
 
 
-void Window::main_loop(){
+bool Window::check_exit(){
 
-    // program main loop
-    bool done = false;
-    while (!done)
-    {
-        // message processing loop
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            // check for messages
-            switch (event.type)
-            {
-                // exit if the window is closed
-            case SDL_QUIT:
-                done = true;
-                break;
-
-                // check for keypresses
-            case SDL_KEYDOWN:
-                {
-                    // exit if ESCAPE is pressed
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        done = true;
-                    break;
-                }
-            } // end switch
-        } // end of message processing
-
-        executeLoopHooks();
-
-        // clear screen
-//        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-
-  //      SDL_Flip(screen);
-    } // end main loop
-
+  //  message processing loop
+  SDL_Event event;
+  if(SDL_PollEvent(&event)){
+      // check for messages
+    switch (event.type){
+      // exit if the window is closed
+      case SDL_QUIT:
+	return true;
+      case SDL_KEYDOWN:
+	if (event.key.keysym.sym == SDLK_ESCAPE) return true;
+  
+    } // end switch
+  } // end of message processing
+  return false;
 }

@@ -24,7 +24,7 @@ class Window{
     void unlock();
     void flip();
 
-    void main_loop();
+    bool check_exit();
   private:
 
     SDL_Surface* screen;

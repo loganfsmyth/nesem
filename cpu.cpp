@@ -71,7 +71,7 @@ int CPU::executeInst(){
 
 	uint8_t inst = bus->read(PC);
 
-	cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
+	//~ cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
 //	cout << get_inst_str(inst) << endl;
 //	cout << hex << "0x" << (unsigned int)AC << dec  << endl;
 //	cout << (int)bus->read(0x1ff) << endl;

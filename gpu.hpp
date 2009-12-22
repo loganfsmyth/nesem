@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <iostream>
 #include <boost/smart_ptr.hpp>
-//~ #include "window.hpp"
+#include "window.hpp"
 #include "rom.hpp"
 #include "bus.hpp"
 #include "mapper.hpp"
@@ -29,10 +29,11 @@ struct color{
 class GPU : public BusItem{
 
   public:
-    GPU(boost::shared_ptr<Mapper> m);
+    GPU(boost::shared_ptr<Mapper> m, boost::shared_ptr<Window> w);
     ~GPU();
 
-
+    bool interrupt_requested();
+  
     uint8_t bus_read(uint16_t location);
     void bus_write(uint16_t location, uint8_t data);
 
@@ -67,7 +68,7 @@ class GPU : public BusItem{
 
     uint8_t offset_x;
 
-    //~ boost::shared_ptr<Window> win;
+    boost::shared_ptr<Window> win;
     //~ boost::shared_ptr<Rom> rom;
 
     uint8_t pix_count;

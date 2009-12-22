@@ -7,6 +7,7 @@
 
 #include "mapper.hpp"
 #include "rom.hpp"
+#include "dma.hpp"
 #include "cpu.hpp"
 #include "gpu.hpp"
 #include "window.hpp"
@@ -25,6 +26,7 @@ int main ( int argc, char** argv ){
   
   if(!process_args(argc, argv, filename)) return 1;
   
+  boost::shared_ptr<Window> win(new Window(512,480));
   boost::shared_ptr<Bus> bus(new Bus());
   
   boost::shared_ptr<Rom> r(new Rom());
@@ -33,18 +35,25 @@ int main ( int argc, char** argv ){
   
   boost::shared_ptr<Mapper> map(new Mapper(r));
   
-  boost::shared_ptr<GPU> gpu(new GPU(map));
+  boost::shared_ptr<GPU> gpu(new GPU(map, win));
+  boost::shared_ptr<DMA> dma(new DMA(bus));
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(gpu), 0x2000, 0x3FFF);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(map), 0x8000, 0xFFFF);
+  bus->register_item(boost::dynamic_pointer_cast<BusItem>(dma), 0x4014, 0x4014);
   
   boost::shared_ptr<CPU> cpu(new CPU(bus));
 
   cpu->reset();
   
-  while(true) {
+  do {
     cpu->executeInst();
-    boost::this_thread::sleep(boost::posix_time::milliseconds(10));
-  }
+    gpu->executeCycle();
+    gpu->executeCycle();
+    gpu->executeCycle();
+    if(gpu->interrupt_requested()) cpu->raise_interrupt();
+    else cpu->drop_interrupt();
+    //~ boost::this_thread::sleep(boost::posix_time::milliseconds(10));
+  } while(!win->check_exit());
 
   // all is well ;)
   printf("Exited cleanly\n");

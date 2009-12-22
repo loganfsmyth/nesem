@@ -4,8 +4,9 @@
 using namespace std;
 
 
-GPU::GPU(boost::shared_ptr<Mapper> m){
+GPU::GPU(boost::shared_ptr<Mapper> m, boost::shared_ptr<Window> w){
   map = m;
+  win = w;
   reg_ctrl = 0;
   reg_mask = 0;
   wait_frame = 0;
@@ -28,7 +29,9 @@ GPU::GPU(boost::shared_ptr<Mapper> m){
 GPU::~GPU(){
 
 }
-
+bool GPU::interrupt_requested() {
+  return ((reg_status&0x80) != 0);
+}
 uint8_t GPU::mem_read(uint16_t location){
   uint16_t mapped_loc = location & 0x3FFF;
 
@@ -95,7 +98,7 @@ int GPU::executeCycle(){
       reg_status &= 0x7F;	//disable vblank flag
       reg_status |= 0x80;
 
-    //			cout << "Set Flag" << endl;
+    			cout << "Set Flag" << endl;
 
     //			display_full();
 
@@ -316,10 +319,10 @@ void GPU::display_full(){
 
       color c = paletteLookup(pix_color);
 
-      //~ win->DrawPixel(2*x,2*y,(int)c.r,(int)c.g,(int)c.b);
-      //~ win->DrawPixel(2*x,2*y+1,(int)c.r,(int)c.g,(int)c.b);
-      //~ win->DrawPixel(2*x+1,2*y,(int)c.r,(int)c.g,(int)c.b);
-      //~ win->DrawPixel(2*x+1,2*y+1,(int)c.r,(int)c.g,(int)c.b);
+      win->DrawPixel(2*x,2*y,(int)c.r,(int)c.g,(int)c.b);
+      win->DrawPixel(2*x,2*y+1,(int)c.r,(int)c.g,(int)c.b);
+      win->DrawPixel(2*x+1,2*y,(int)c.r,(int)c.g,(int)c.b);
+      win->DrawPixel(2*x+1,2*y+1,(int)c.r,(int)c.g,(int)c.b);
 
       //~ win->unlock();
     }
@@ -327,7 +330,7 @@ void GPU::display_full(){
 
   //	render_sprites();
 
-    //~ win->flip();
+    win->flip();
 
 }
 void GPU::render_sprites(){
@@ -360,10 +363,10 @@ void GPU::render_sprites(){
 
 	color c = paletteLookup(pix_color);
 
-	//~ win->DrawPixel(2*(x+x_offset),2*(y+y_offset),(int)c.r,(int)c.g,(int)c.b);
-	//~ win->DrawPixel(2*(x+x_offset),2*(y+y_offset)+1,(int)c.r,(int)c.g,(int)c.b);
-	//~ win->DrawPixel(2*(x+x_offset)+1,2*(y+y_offset),(int)c.r,(int)c.g,(int)c.b);
-	//~ win->DrawPixel(2*(x+x_offset)+1,2*(y+y_offset)+1,(int)c.r,(int)c.g,(int)c.b);
+	win->DrawPixel(2*(x+x_offset),2*(y+y_offset),(int)c.r,(int)c.g,(int)c.b);
+	win->DrawPixel(2*(x+x_offset),2*(y+y_offset)+1,(int)c.r,(int)c.g,(int)c.b);
+	win->DrawPixel(2*(x+x_offset)+1,2*(y+y_offset),(int)c.r,(int)c.g,(int)c.b);
+	win->DrawPixel(2*(x+x_offset)+1,2*(y+y_offset)+1,(int)c.r,(int)c.g,(int)c.b);
       }
     }
 
@@ -396,10 +399,10 @@ void GPU::display(){
   color c = paletteLookup(pix_color);
 
   //~ win->lock();
-  //~ win->DrawPixel(cycle,scanline,c.r,c.g,c.b);
-  //~ win->DrawPixel(cycle+1,scanline,c.r,c.g,c.b);
-  //~ win->DrawPixel(cycle,scanline+1,c.r,c.g,c.b);
-  //~ win->DrawPixel(cycle+1,scanline+1,c.r,c.g,c.b);
+  win->DrawPixel(cycle,scanline,c.r,c.g,c.b);
+  win->DrawPixel(cycle+1,scanline,c.r,c.g,c.b);
+  win->DrawPixel(cycle,scanline+1,c.r,c.g,c.b);
+  win->DrawPixel(cycle+1,scanline+1,c.r,c.g,c.b);
   //~ win->unlock();
 
 }
