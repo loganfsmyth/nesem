@@ -8,6 +8,7 @@
 #include "mapper.hpp"
 #include "rom.hpp"
 #include "dma.hpp"
+#include "memory.hpp"
 #include "cpu.hpp"
 #include "gpu.hpp"
 #include "window.hpp"
@@ -34,12 +35,14 @@ int main ( int argc, char** argv ){
   r->print_stats();
   
   boost::shared_ptr<Mapper> map(new Mapper(r));
+  boost::shared_ptr<Memory> ram(new Memory(0x2000));
   
   boost::shared_ptr<GPU> gpu(new GPU(map, win));
   boost::shared_ptr<DMA> dma(new DMA(bus));
+  bus->register_item(boost::dynamic_pointer_cast<BusItem>(ram), 0x0, 0x1FFF);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(gpu), 0x2000, 0x3FFF);
-  bus->register_item(boost::dynamic_pointer_cast<BusItem>(map), 0x8000, 0xFFFF);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(dma), 0x4014, 0x4014);
+  bus->register_item(boost::dynamic_pointer_cast<BusItem>(map), 0x8000, 0xFFFF);
   
   boost::shared_ptr<CPU> cpu(new CPU(bus));
 

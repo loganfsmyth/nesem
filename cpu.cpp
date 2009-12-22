@@ -71,6 +71,7 @@ int CPU::executeInst(){
 
 	uint8_t inst = bus->read(PC);
 
+	
 	//~ cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
 //	cout << get_inst_str(inst) << endl;
 //	cout << hex << "0x" << (unsigned int)AC << dec  << endl;
@@ -83,7 +84,7 @@ int CPU::executeInst(){
 
 
 	if(PC == 0xC04D) {
-//		cout << "DONE" << endl;
+	  //~ cout << "DONE" << endl;
 
 	}
 
@@ -566,7 +567,7 @@ int CPU::executeInst(){
 
 		case JSR_AB:
 			temp = PC;
-//			print_stack();
+			//~ print_stack();
 
 			PC--;
 			PUSH((PC >> 8) & 0xff);	/* Push return address onto the stack. */
@@ -575,8 +576,9 @@ int CPU::executeInst(){
 
 			//~ cout << "OMG" << endl;
 			//~ address << "From " << hex << (int)temp << " to " << (int)PC;
+			//~ cout << "From " << hex << (int)temp << " to " << (int)PC << endl;
 			//~ cout << "OMG" << endl;
-//~ //			address_str = address.str();
+			//~ address_str = address.str();
 			//~ address_str = "OMG";
 			//~ cout << "OMG" << endl;
 			//~ cout << trace.size() << "!!" << endl;
@@ -584,7 +586,7 @@ int CPU::executeInst(){
 			//~ trace.push_back(address_str);
 			//~ cout << "OMG" << endl;
 
-//			print_stack();
+			//~ print_stack();
 
 			break;
 

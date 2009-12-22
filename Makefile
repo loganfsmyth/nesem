@@ -2,8 +2,8 @@ OPTIONS = -Wall -std=c++0x -ggdb
 EXEC_NAME = nesem
 
 	
-compile: main.o rom.o cpu.o mapper.o gpu.o window.o main.o bus.o dma.o
-	g++ main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o -o ${EXEC_NAME} ${OPTIONS} -lSDL -lboost_program_options-mt -lboost_thread-mt
+compile: main.o rom.o cpu.o mapper.o gpu.o window.o main.o bus.o dma.o memory.o
+	g++ main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o memory.o -o ${EXEC_NAME} ${OPTIONS} -lSDL -lboost_program_options-mt -lboost_thread-mt
 	
 main.o: main.cpp
 	g++ -c main.cpp ${OPTIONS}
@@ -16,6 +16,9 @@ cpu.o: cpu.cpp cpu.hpp
 	
 mapper.o: mapper.cpp mapper.hpp
 	g++ -c mapper.cpp ${OPTIONS}
+	
+memory.o: memory.cpp memory.hpp
+	g++ -c memory.cpp ${OPTIONS}
 	
 gpu.o: gpu.cpp gpu.hpp
 	g++ -c gpu.cpp ${OPTIONS}
