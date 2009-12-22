@@ -4,9 +4,10 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <iostream>
 #include <sstream>
 #include <boost/smart_ptr.hpp>
-#include "memory.hpp"
+#include "bus.hpp"
 
 
 
@@ -244,8 +245,8 @@
 //#define PUSH(val) mem->write(SP--, val)
 //#define PULL() mem->read(++SP)
 
-#define PUSH(val) mem->write(SP + 0x100, val); SP--; //cout << "PUSH: " << ((int)val) << endl;
-#define PULL() mem->read(((++SP) & 0xFF) + 0x100)
+#define PUSH(val) bus->write(SP + 0x100, val); SP--; //cout << "PUSH: " << ((int)val) << endl;
+#define PULL() bus->read(((++SP) & 0xFF) + 0x100)
 
 struct instruction_info{
 	int length;
@@ -256,12 +257,11 @@ struct instruction_info{
 
 class CPU{
 	public:
-		CPU();
+		CPU(boost::shared_ptr<Bus> b);
 		~CPU();
 
 
 		int executeInst();
-		void setMemory(boost::shared_ptr<Memory> m);
 		void reset();
 		void trigger_interrupt();
 		void raise_interrupt();
@@ -284,7 +284,7 @@ class CPU{
 		uint8_t SP, SR;
 		uint16_t PC;
 
-		boost::shared_ptr<Memory> mem;
+		boost::shared_ptr<Bus> bus;
 
 		bool interrupt_status, interrupt_status_last;
 

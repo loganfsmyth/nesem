@@ -3,22 +3,19 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/smart_ptr.hpp>
+#include <boost/thread.hpp>
 
+#include "mapper.hpp"
 #include "rom.hpp"
-#include "memory.hpp"
 #include "cpu.hpp"
+#include "gpu.hpp"
 #include "window.hpp"
+#include "bus.hpp"
 
 #define NESEM_DEFAULT_FPS 30
 
 using namespace std;
 
-
-boost::shared_ptr<Rom> r;
-boost::shared_ptr<Memory> mem;
-boost::shared_ptr<GPU> gpu;
-boost::shared_ptr<Window> win;
-boost::shared_ptr<CPU> cpu;
 
 bool process_args(int argc, char** argv, string &filename);
 void main_loop();
@@ -28,55 +25,30 @@ int main ( int argc, char** argv ){
   
   if(!process_args(argc, argv, filename)) return 1;
   
+  boost::shared_ptr<Bus> bus(new Bus());
   
-  r.reset(new Rom());
+  boost::shared_ptr<Rom> r(new Rom());
   r->load(filename);
   r->print_stats();
+  
+  boost::shared_ptr<Mapper> map(new Mapper(r));
+  
+  boost::shared_ptr<GPU> gpu(new GPU(map));
+  bus->register_item(boost::dynamic_pointer_cast<BusItem>(gpu), 0x2000, 0x3FFF);
+  bus->register_item(boost::dynamic_pointer_cast<BusItem>(map), 0x8000, 0xFFFF);
+  
+  boost::shared_ptr<CPU> cpu(new CPU(bus));
 
-  mem.reset(new Memory());
-  mem->load(r);
+  cpu->reset();
+  
+  while(true) {
+    cpu->executeInst();
+    boost::this_thread::sleep(boost::posix_time::milliseconds(10));
+  }
 
-  gpu.reset(new GPU());
-  gpu->setCHRRom(r);
-  mem->setGPU(gpu);
-
-
-  win.reset(new Window(512, 480));
-  gpu->setWindow(win);
-  //	win->registerExitHook(&nesem_exit);
-
-
-  cpu.reset(new CPU());
-  cpu->setMemory(mem);
-
-
-    win->registerLoopHook(&main_loop);
-
-
-    win->main_loop();
-
-    // all is well ;)
-    printf("Exited cleanly\n");
-    return 0;
-}
-
-
-void main_loop(){
-
-
-		int i = 1;
-		i = cpu->executeInst();
-
-		int j = 0;
-		while(j++ < i*3){
-			if(gpu->executeCycle()){
-				cpu->raise_interrupt();
-			}
-			else cpu->drop_interrupt();
-		}
-
-
-
+  // all is well ;)
+  printf("Exited cleanly\n");
+  return 0;
 }
 
 bool process_args(int argc, char** argv, string &filename) {

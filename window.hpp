@@ -9,27 +9,27 @@ typedef void (*hook_ptr)();
 
 class Window{
 
-	public:
-		Window(int width, int height);
-		~Window();
+  public:
+    Window(int width, int height);
+    ~Window();
 
-		void registerExitHook(void (*hook_ptr)());
-		void registerLoopHook(void (*hook_ptr)());
+    void registerExitHook(void (*hook_ptr)());
+    void registerLoopHook(void (*hook_ptr)());
 
-		void executeLoopHooks();
+    void executeLoopHooks();
 
-		void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B);
+    void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B);
 
-		void lock();
-		void unlock();
-		void flip();
+    void lock();
+    void unlock();
+    void flip();
 
-		void main_loop();
-	private:
+    void main_loop();
+  private:
 
-		SDL_Surface* screen;
-		std::vector<hook_ptr> hooks;
-		std::vector<hook_ptr> loop_hooks;
+    SDL_Surface* screen;
+    std::vector<hook_ptr> hooks;
+    std::vector<hook_ptr> loop_hooks;
 
 };
 

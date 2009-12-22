@@ -2,8 +2,8 @@
 
 using namespace std;
 
-
-CPU::CPU(){
+CPU::CPU(boost::shared_ptr<Bus> b){
+  bus = b;
 	XR = 0;
 	YR = 0;
 	AC = 0;
@@ -20,16 +20,9 @@ CPU::~CPU(){
 }
 
 void CPU::reset(){
-	PC = mem->read(0xFFFC) | (mem->read(0xFFFD) << 8);
+	PC = bus->read(0xFFFC) | (bus->read(0xFFFD) << 8);
 }
 
-void CPU::setMemory(boost::shared_ptr<Memory> m){
-	mem = m;
-	PC = mem->read(0xFFFC) | (mem->read(0xFFFD) << 8);
-
-	cout << "PC: " << hex << "0x" << PC << dec << endl << endl;
-
-}
 void CPU::trigger_interrupt(){
 
 	//~ print_stack();
@@ -38,7 +31,7 @@ void CPU::trigger_interrupt(){
 	PUSH(PC & 0xFF);
 	PUSH(SR);
 
-	PC = mem->read(0xFFFA) | (mem->read(0xFFFB) << 8);
+	PC = bus->read(0xFFFA) | (bus->read(0xFFFB) << 8);
 
 	//~ print_stack();
 }
@@ -56,7 +49,7 @@ void CPU::print_stack(){
 
 	int i;
 	for(i = 0xFF; i > SP; i--){
-		cout << (i + 0x100) << ": " << (int)mem->read(i + 0x100) << endl;
+		cout << (i + 0x100) << ": " << (int)bus->read(i + 0x100) << endl;
 	}
 
 	cout << "----------------" << endl;
@@ -76,12 +69,12 @@ int CPU::executeInst(){
 
 	int time = 0;
 
-	uint8_t inst = mem->read(PC);
+	uint8_t inst = bus->read(PC);
 
-//	cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
+	cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
 //	cout << get_inst_str(inst) << endl;
 //	cout << hex << "0x" << (unsigned int)AC << dec  << endl;
-//	cout << (int)mem->read(0x1ff) << endl;
+//	cout << (int)bus->read(0x1ff) << endl;
 
 	//~ if(PC >= 0xB10A && PC <= 0xB110){
 		//~ cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
@@ -100,8 +93,8 @@ int CPU::executeInst(){
 //	cout << "Type: " << inst_info.type << endl;
 
 	uint8_t arg1 = 0, arg2 = 0;
-	if(inst_info.length > 1) arg1 = mem->read(PC + 1);
-	if(inst_info.length > 2) arg2 = mem->read(PC + 2);
+	if(inst_info.length > 1) arg1 = bus->read(PC + 1);
+	if(inst_info.length > 2) arg2 = bus->read(PC + 2);
 
 	PC += inst_info.length;
 	time += inst_info.time;
@@ -337,7 +330,7 @@ int CPU::executeInst(){
 			SET_BREAK((1));             /* Set BFlag before pushing */
 			PUSH(SR);
 			SET_INTERRUPT((1));
-			PC = (mem->read(0xFFFE) | (mem->read(0xFFFF) << 8));
+			PC = (bus->read(0xFFFE) | (bus->read(0xFFFF) << 8));
 
 
 		case CLC_IMP:	SET_CARRY(0); break;
@@ -568,7 +561,7 @@ int CPU::executeInst(){
 			PC = (arg2 << 8) | arg1;
 			break;
 		case JMP_IN:
-			PC = mem->read((arg2 << 8) | arg1) | (mem->read(((arg2 << 8) | arg1) + 1) << 8);
+			PC = bus->read((arg2 << 8) | arg1) | (bus->read(((arg2 << 8) | arg1) + 1) << 8);
 			break;
 
 		case JSR_AB:
@@ -631,32 +624,32 @@ void CPU::write(int type, uint8_t arg1, uint8_t arg2, uint8_t data){
 			break;
 
 		case MEM_ZP:
-			mem->write(arg1, data);
+			bus->write(arg1, data);
 			break;
 		case MEM_ZPX:
-			mem->write((arg1 + (uint8_t)XR) & 0x00FF, data);
+			bus->write((arg1 + (uint8_t)XR) & 0x00FF, data);
 			break;
 		case MEM_ZPY:
-			mem->write((arg1 + (uint8_t)YR) & 0x00FF, data);
+			bus->write((arg1 + (uint8_t)YR) & 0x00FF, data);
 			break;
 		case MEM_AB:
-			mem->write((arg2 << 8) | arg1, data);
+			bus->write((arg2 << 8) | arg1, data);
 			break;
 		case MEM_ABX:
-			mem->write(((arg2 << 8) | arg1) + (uint8_t)XR, data);
+			bus->write(((arg2 << 8) | arg1) + (uint8_t)XR, data);
 			break;
 		case MEM_ABY:
-			mem->write(((arg2 << 8) | arg1) + (uint8_t)YR, data);
+			bus->write(((arg2 << 8) | arg1) + (uint8_t)YR, data);
 			break;
 		case MEM_INX:
-			lower = mem->read(arg1 + (uint8_t)XR);
-			upper = mem->read(arg1 + (uint8_t)XR + 1);
-			mem->write((upper << 8) | lower, data);
+			lower = bus->read(arg1 + (uint8_t)XR);
+			upper = bus->read(arg1 + (uint8_t)XR + 1);
+			bus->write((upper << 8) | lower, data);
 			break;
 		case MEM_INY:
-			lower = mem->read(arg1);
-			upper = mem->read(arg1 + 1);
-			mem->write(((upper << 8) | lower) + (uint8_t)YR, data);
+			lower = bus->read(arg1);
+			upper = bus->read(arg1 + 1);
+			bus->write(((upper << 8) | lower) + (uint8_t)YR, data);
 			break;
 		case MEM_IMP:
 			break;
@@ -666,9 +659,9 @@ void CPU::write(int type, uint8_t arg1, uint8_t arg2, uint8_t data){
 
 		case MEM_IN:
 			temp = (arg2 << 8) & arg1;
-			lower = mem->read(temp);
-			upper = mem->read(temp + 1);
-			mem->write((upper << 8) | lower, data);
+			lower = bus->read(temp);
+			upper = bus->read(temp + 1);
+			bus->write((upper << 8) | lower, data);
 			break;
 		case MEM_REL:
 			break;
@@ -688,35 +681,35 @@ uint8_t CPU::read(int type, uint8_t arg1, uint8_t arg2){
 			return arg1;
 
 		case MEM_ZP:
-			return mem->read(arg1);
+			return bus->read(arg1);
 
 		case MEM_ZPX:
-			return mem->read((arg1 + (uint8_t)XR) & 0x00FF);
+			return bus->read((arg1 + (uint8_t)XR) & 0x00FF);
 
 		case MEM_ZPY:
-			return mem->read((arg1 + (uint8_t)YR) & 0x00FF);
+			return bus->read((arg1 + (uint8_t)YR) & 0x00FF);
 
 		case MEM_AB:
-			return mem->read((arg2 << 8) | arg1);
+			return bus->read((arg2 << 8) | arg1);
 
 		case MEM_ABX:
-			return mem->read(((arg2 << 8) | arg1) + (uint8_t)XR);
+			return bus->read(((arg2 << 8) | arg1) + (uint8_t)XR);
 
 		case MEM_ABY:
-			return mem->read(((arg2 << 8) | arg1) + (uint8_t)YR);
+			return bus->read(((arg2 << 8) | arg1) + (uint8_t)YR);
 
 		case MEM_INX:
-			lower = mem->read(arg1 + (uint8_t)XR);
-			upper = mem->read(arg1 + (uint8_t)XR + 1);
-			return mem->read((upper << 8) | lower);
+			lower = bus->read(arg1 + (uint8_t)XR);
+			upper = bus->read(arg1 + (uint8_t)XR + 1);
+			return bus->read((upper << 8) | lower);
 
 		case MEM_INY:
-			lower = mem->read(arg1);
-			upper = mem->read(arg1 + 1);
+			lower = bus->read(arg1);
+			upper = bus->read(arg1 + 1);
 
 //			cout << "INY 0x" << hex << (unsigned int)(((upper << 8) | lower) + (uint8_t)YR) << dec << endl;
 
-			return mem->read(((upper << 8) | lower) + (uint8_t)YR);
+			return bus->read(((upper << 8) | lower) + (uint8_t)YR);
 
 		case MEM_IMP:
 			return 0;
@@ -726,9 +719,9 @@ uint8_t CPU::read(int type, uint8_t arg1, uint8_t arg2){
 
 		case MEM_IN:
 			temp = (arg2 << 8) & arg1;
-			lower = mem->read(temp);
-			upper = mem->read(temp + 1);
-			return mem->read((upper << 8) | lower);
+			lower = bus->read(temp);
+			upper = bus->read(temp + 1);
+			return bus->read((upper << 8) | lower);
 
 		case MEM_REL:
 			return arg1;
