@@ -79,6 +79,10 @@ int GPU::executeCycle(){
     return 0;
   }
 
+  //~ cout << "(" << cycle << ", " << scanline << ") " << hex << "0x" << (int)vram_address_reg;
+  
+
+
   if(cycle == 256 && scanline == 240){
   //		cout << "(" << cycle << ", " << scanline << ") " << hex << "0x" << (unsigned int)vram_address_reg << " : 0x" << (unsigned int)vram_address_temp << dec << endl;
 
@@ -98,9 +102,7 @@ int GPU::executeCycle(){
       reg_status &= 0x7F;	//disable vblank flag
       reg_status |= 0x80;
 
-    			cout << "Set Flag" << endl;
-
-    //			display_full();
+      //~ cout << "Set Flag 0x" << hex << (int)vram_address_temp << " 0x" << (int)vram_address_reg << dec << endl;
 
     }
     else if(scanline < 240){
@@ -122,6 +124,7 @@ int GPU::executeCycle(){
 	vram_address_reg &= 0x0FFF; //clear 12-15
 	vram_address_reg |= ((vram_temp&0x7000)+0x1000) & 0x7000;	//increment 12-14
       }
+      
     }
 
     if(scanline == 261) scanline = 0;
@@ -132,19 +135,21 @@ int GPU::executeCycle(){
   else{
     if(cycle < 256 && ((cycle&0x7) == 0x7) && scanline < 240){
       int vram_temp = vram_address_reg;
-      vram_address_reg &= 0xFFE0;
 
-      if((vram_address_reg&0x1F) == 31){
+      if((vram_address_reg&0x1F) == 0x1F){
 	vram_address_reg &= 0xFBFF;
 	vram_address_reg |= ((vram_temp&0x0400) == 0)?0x400:0x0;
       }
 
+      vram_address_reg &= 0xFFE0;
       vram_address_reg |= ((vram_temp&0x1F)+1) & 0x1F;
     }
 
     cycle++;
   }
 
+  //~ cout << " => 0x" << (int)vram_address_reg << dec << endl;
+  
   return (reg_status & 0x80) != 0 && (reg_ctrl & 0x80) == 0;
 }
 
@@ -224,7 +229,7 @@ void GPU::bus_write(uint16_t location, uint8_t data){
 	vram_address_reg = vram_address_temp;
       }
 
-      cout << "Write Reg 6: 0x" << hex << (unsigned int)vram_address_reg << " :: 0x" <<  (unsigned int)data << dec << endl;
+      //~ cout << "Write Reg 6: 0x" << hex << (unsigned int)vram_address_reg << " :: 0x" <<  (unsigned int)data << dec << endl;
 
       addr_toggle = !addr_toggle;
       break;

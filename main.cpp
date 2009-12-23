@@ -48,6 +48,18 @@ int main ( int argc, char** argv ){
 
   cpu->reset();
   
+  //~ bus->write(0x2006, 0x20);
+  //~ bus->write(0x2006, 0x00);
+  
+  //~ for(int i = 0; i < 0x3C0; i++) {
+    
+    //~ bus->write(0x2007, i/0x1F);
+    
+  //~ }
+  
+  //~ bus->write(0x2006, 0x00);
+  //~ bus->write(0x2006, 0x21);
+  
   do {
     cpu->executeInst();
     gpu->executeCycle();
