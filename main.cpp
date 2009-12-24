@@ -62,6 +62,7 @@ int main ( int argc, char** argv ){
   
   do {
     int time = cpu->executeInst();
+    //~ int time = 1;
     for(int i = 0; i < time; i++ ){
       gpu->executeCycle();
       gpu->executeCycle();

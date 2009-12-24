@@ -320,7 +320,7 @@ int CPU::executeInst(){
       PUSH(SR);
       SET_INTERRUPT((1));
       PC = (bus->read(0xFFFE) | (bus->read(0xFFFF) << 8));
-
+      break;
 
     case CLC_IMP:	SET_CARRY(0); break;
     case SEC_IMP:	SET_CARRY(1); break;
