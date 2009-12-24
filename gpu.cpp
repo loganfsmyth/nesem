@@ -3673,23 +3673,23 @@ int GPU::executeCycle(){
     return 0;
   }
 
-  cout << dec << "(" << cycle << ", " << scanline << ") " << hex << "0x" << (int)vram_address_reg << endl;
+  //~ cout << dec << "(" << cycle << ", " << scanline << ") " << hex << "Temp:0x" << (int)vram_address_temp << " Reg:0x" << (int)vram_address_reg << endl;
   
 
-  if(cycle < 256 && scanline < 240){
+  if(cycle < 256 && scanline > 0 && scanline < 241){
       
     int pix_color = get_pixel_color();
     color c = paletteLookup(pix_color);
     win->lock();
-    win->DrawPixel(2*cycle,2*scanline,(int)c.r,(int)c.g,(int)c.b);
-    win->DrawPixel(2*cycle,2*scanline+1,(int)c.r,(int)c.g,(int)c.b);
-    win->DrawPixel(2*cycle+1,2*scanline,(int)c.r,(int)c.g,(int)c.b);
-    win->DrawPixel(2*cycle+1,2*scanline+1,(int)c.r,(int)c.g,(int)c.b);
+    win->DrawPixel(2*cycle,2*(scanline-1),(int)c.r,(int)c.g,(int)c.b);
+    win->DrawPixel(2*cycle,2*(scanline-1),(int)c.r,(int)c.g,(int)c.b);
+    win->DrawPixel(2*cycle+1,2*(scanline-1),(int)c.r,(int)c.g,(int)c.b);
+    win->DrawPixel(2*cycle+1,2*(scanline-1)+1,(int)c.r,(int)c.g,(int)c.b);
     win->unlock();
   }
 
   if(cycle == 341){
-    if(scanline == 261){
+    if(scanline == 0){
       reg_status &= 0x7F;	//disable vblank flag
 
       vram_address_reg = vram_address_temp;
@@ -3702,9 +3702,9 @@ int GPU::executeCycle(){
       //~ cout << "Set Flag 0x" << hex << (int)vram_address_temp << " 0x" << (int)vram_address_reg << dec << endl;
 
     }
-    else if(scanline < 240){
+    else if(scanline > 0 && scanline < 241){
       vram_address_reg &= 0xFBE0;	//reset bit 10 (The X NT) and bits 0-4(the x loc)
-      vram_address_reg |= vram_address_temp&0x041F; //reset bits 0-4 and 10
+      vram_address_reg |= vram_address_reg&0x041F; //reset bits 0-4 and 10
 
       int vram_temp = vram_address_reg;
 
@@ -3730,7 +3730,7 @@ int GPU::executeCycle(){
     cycle = 0;
   }
   else{
-    if(cycle < 256 && ((cycle&0x7) == 0x7) && scanline < 240){
+    if(cycle < 256 && ((cycle&0x7) == 0x7) && (scanline > 0 && scanline < 241)){
       int vram_temp = vram_address_reg;
 
       if((vram_address_reg&0x1F) == 0x1F){
@@ -3764,9 +3764,14 @@ uint8_t GPU::bus_read(uint16_t location){
       return sprite_ram[reg_oam_addr];
 
     case GPU_REG_DATA:
-      temp = vram_read_delay;
-      vram_read_delay = mem_read(vram_address_reg);
-      return temp;	//first read is discarded incorrect data
+      if(location >= 0x3F00 && location < 0x4000) {
+	return mem_read(vram_address_reg);
+      }
+      else {
+	temp = vram_read_delay;
+	vram_read_delay = mem_read(vram_address_reg);
+	return temp;	//first read is discarded incorrect data
+      }
 
     case GPU_REG_OAM_ADDR:
     case GPU_REG_CTRL:
@@ -3820,7 +3825,7 @@ void GPU::bus_write(uint16_t location, uint8_t data){
     case GPU_REG_ADDR:
       if(addr_toggle == false){
 	vram_address_temp &= 0x00FF;
-	vram_address_temp |= (((uint16_t)data & 0x7F) << 8);
+	vram_address_temp |= (((uint16_t)data & 0x3F) << 8);
       }
       else{
 	vram_address_temp &= 0xFF00;
