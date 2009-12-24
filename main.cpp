@@ -53,18 +53,21 @@ int main ( int argc, char** argv ){
   
   //~ for(int i = 0; i < 0x3C0; i++) {
     
-    //~ bus->write(0x2007, i/0x1F);
+    //~ bus->write(0x2007, i);
     
   //~ }
   
   //~ bus->write(0x2006, 0x00);
-  //~ bus->write(0x2006, 0x21);
+  //~ bus->write(0x2006, 0x00);
   
   do {
-    cpu->executeInst();
-    gpu->executeCycle();
-    gpu->executeCycle();
-    gpu->executeCycle();
+    int time = cpu->executeInst();
+    for(int i = 0; i < time; i++ ){
+      gpu->executeCycle();
+      gpu->executeCycle();
+      gpu->executeCycle();
+    }
+    
     if(gpu->interrupt_requested()) cpu->raise_interrupt();
     else cpu->drop_interrupt();
     //~ boost::this_thread::sleep(boost::posix_time::milliseconds(10));

@@ -8,7 +8,7 @@ Window::Window(int width, int height){
 		cout << "Unable to init SDL: " << SDL_GetError() << endl;
 		return;
 	}
-	screen = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE|SDL_DOUBLEBUF);
+	screen = SDL_SetVideoMode(width, height, 32, SDL_HWSURFACE);
 	if ( screen == NULL ){
 		cout << "Unable to set resolution: " << SDL_GetError() << endl;
 		return;

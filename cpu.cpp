@@ -14,6 +14,7 @@ CPU::CPU(boost::shared_ptr<Bus> b){
   interrupt_status = false;
   interrupt_status_last = false;
 
+  wait_time = 0;
 }
 CPU::~CPU(){
 
@@ -63,15 +64,13 @@ int CPU::executeInst(){
   }
   interrupt_status_last = interrupt_status;
 
-
   ostringstream address;
   string address_str;
-
   int time = 0;
 
   uint8_t inst = bus->read(PC);
-
-	
+   
+  
   //~ cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
 //  cout << get_inst_str(inst) << endl;
 //  cout << hex << "0x" << (unsigned int)AC << dec  << endl;
@@ -82,14 +81,8 @@ int CPU::executeInst(){
 //~ print_stack();
 //~ }
 
-
-if(PC == 0xC04D) {
-  //~ cout << "DONE" << endl;
-
-}
-
   struct instruction_info inst_info = get_instruction_info(inst);
-
+  
 //  cout << "Len: " << inst_info.length << endl;
 //  cout << "Type: " << inst_info.type << endl;
 

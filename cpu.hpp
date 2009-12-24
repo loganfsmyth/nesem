@@ -280,6 +280,8 @@ class CPU{
     uint8_t XR,YR,AC;
     uint8_t SP, SR;
     uint16_t PC;
+  
+    int wait_time;
 
     boost::shared_ptr<Bus> bus;
 

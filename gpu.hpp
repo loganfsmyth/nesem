@@ -39,7 +39,7 @@ class GPU : public BusItem{
 
     int executeCycle();
     void display();
-    void display_full();
+    int get_pixel_color();
     void printPT(int y);
     void printNT(int y);
 
