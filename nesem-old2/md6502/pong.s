@@ -2,7 +2,7 @@ C000 : D8		cld			;
 C001 : 78		sei			;
 C002 : A2 FF		ldx	#$FF		;
 C004 : 9A		txs			;
-C005 : AD 02 20		lda	$2002		;PPU Status Reg.
+  C005 : AD 02 20		lda	$2002		;PPU Status Reg.
 C008 : 10 FB		bpl	$C005		;
 C00A : A2 00		ldx	#$00		;
 C00C : 8E 00 20		stx	$2000		;PPU CtrlReg.#1
@@ -17,10 +17,10 @@ C01E : A9 48		lda	#$48		;
 C020 : 85 12		sta	$12		;
 C022 : A9 20		lda	#$20		;
 C024 : 85 20		sta	$20		;
-C026 : 91 00		sta	($00),y		;
-C028 : 88		dey			;
-C029 : D0 FB		bne	$C026		;
-C02B : C6 01		dec	$01		;
+  C026 : 91 00		sta	($00),y		;
+  C028 : 88		dey			;
+  C029 : D0 FB		bne	$C026		;
+  C02B : C6 01		dec	$01		;
 C02D : 10 F7		bpl	$C026		;
 C02F : A2 3F		ldx	#$3F		;
 C031 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
@@ -28,28 +28,28 @@ C034 : A2 00		ldx	#$00		;
 C036 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C039 : A2 27		ldx	#$27		;
 C03B : A0 20		ldy	#$20		;
-C03D : 8E 07 20		stx	$2007		;VRAM I/O Reg.
-C040 : 88		dey			;
+  C03D : 8E 07 20		stx	$2007		;VRAM I/O Reg.
+  C040 : 88		dey			;
 C041 : D0 FA		bne	$C03D		;
 C043 : A2 3F		ldx	#$3F		;
 C045 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C048 : A2 00		ldx	#$00		;
 C04A : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C04D : A2 00		ldx	#$00		;
-C04F : BD 47 C2		lda	$C247,x		;
-C052 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
-C055 : E8		inx			;
-C056 : E4 20		cpx	$20		;
+  C04F : BD 47 C2		lda	$C247,x		;
+  C052 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
+  C055 : E8		inx			;
+  C056 : E4 20		cpx	$20		;
 C058 : D0 F5		bne	$C04F		;
 C05A : A2 23		ldx	#$23		;
 C05C : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C05F : A2 C0		ldx	#$C0		;
 C061 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C064 : A2 00		ldx	#$00		;
-C066 : BD 67 C2		lda	$C267,x		;
-C069 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
-C06C : E8		inx			;
-C06D : E4 10		cpx	$10		;
+  C066 : BD 67 C2		lda	$C267,x		;
+  C069 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
+  C06C : E8		inx			;
+  C06D : E4 10		cpx	$10		;
 C06F : D0 F5		bne	$C066		;
 C071 : A2 00		ldx	#$00		;
 C073 : A2 20		ldx	#$20		;
@@ -58,10 +58,10 @@ C078 : A2 00		ldx	#$00		;
 C07A : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C07D : A2 00		ldx	#$00		;
 C07F : A0 00		ldy	#$00		;
-C081 : BD A7 C2		lda	$C2A7,x		;
-C084 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
-C087 : E8		inx			;
-C088 : E0 00		cpx	#$00		;
+  C081 : BD A7 C2		lda	$C2A7,x		;
+  C084 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
+  C087 : E8		inx			;
+  C088 : E0 00		cpx	#$00		;
 C08A : D0 F5		bne	$C081		;
 C08C : A0 00		ldy	#$00		;
 C08E : BD F7 C3		lda	$C3F7,x		;
@@ -122,55 +122,58 @@ C101 : 85 58		sta	$58		;
 C103 : 85 62		sta	$62		;
 C105 : 85 72		sta	$72		;
 C107 : 85 74		sta	$74		;
-C109 : A9 01		lda	#$01		;
-C10B : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
-C10E : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
-C111 : A9 00		lda	#$00		;
-C113 : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
-C116 : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
-C119 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C11C : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C11F : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C122 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C125 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C128 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C12B : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C12E : 29 01		and	#$01		;
+  C109 : A9 01		lda	#$01		;
+  C10B : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
+  C10E : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
+  C111 : A9 00		lda	#$00		;
+  C113 : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
+  C116 : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
+  C119 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C11C : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C11F : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C122 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C125 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C128 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C12B : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C12E : 29 01		and	#$01		;
 C130 : F0 D7		beq	$C109		;
-C132 : 20 67 C6		jsr	$C667		;
-C135 : 20 D5 C8		jsr	$C8D5		;
-C138 : 20 0E C8		jsr	$C80E		;
-C13B : 20 D2 C7		jsr	$C7D2		;
-C13E : 20 F0 C7		jsr	$C7F0		;
-C141 : 20 63 C8		jsr	$C863		;
-C144 : 20 D2 C7		jsr	$C7D2		;
-C147 : 20 F0 C7		jsr	$C7F0		;
-C14A : 4C 4D C1		jmp	$C14D		;
-C14D : A5 56		lda	$56		;
-C14F : C9 00		cmp	#$00		;
-C151 : F0 13		beq	$C166		;
-C153 : A9 15		lda	#$15		;
-C155 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
-C158 : A9 07		lda	#$07		;
-C15A : 18		clc			;
-C15B : 65 56		adc	$56		;
-C15D : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
-C160 : A5 56		lda	$56		;
-C162 : C9 09		cmp	#$09		;
-C164 : F0 1C		beq	$C182		;
-C166 : A5 58		lda	$58		;
-C168 : C9 00		cmp	#$00		;
-C16A : F0 13		beq	$C17F		;
-C16C : A9 19		lda	#$19		;
-C16E : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
-C171 : A9 07		lda	#$07		;
-C173 : 18		clc			;
-C174 : 65 58		adc	$58		;
-C176 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
-C179 : A5 58		lda	$58		;
-C17B : C9 09		cmp	#$09		;
-C17D : F0 03		beq	$C182		;
-C17F : 4C 32 C1		jmp	$C132		;
+
+  C132 : 20 67 C6		jsr	$C667		;
+  C135 : 20 D5 C8		jsr	$C8D5		;
+  C138 : 20 0E C8		jsr	$C80E		;
+  C13B : 20 D2 C7		jsr	$C7D2		;
+  C13E : 20 F0 C7		jsr	$C7F0		;
+  C141 : 20 63 C8		jsr	$C863		;
+  C144 : 20 D2 C7		jsr	$C7D2		;
+  C147 : 20 F0 C7		jsr	$C7F0		;
+  C14A : 4C 4D C1		jmp	$C14D		;
+  C14D : A5 56		lda	$56		;
+  C14F : C9 00		cmp	#$00		;
+  C151 : F0 13		beq	$C166		;
+  C153 : A9 15		lda	#$15		;
+  C155 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
+  C158 : A9 07		lda	#$07		;
+  C15A : 18		clc			;
+  C15B : 65 56		adc	$56		;
+  C15D : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
+  C160 : A5 56		lda	$56		;
+  C162 : C9 09		cmp	#$09		;
+  C164 : F0 1C		beq	$C182		;
+  C166 : A5 58		lda	$58		;
+  C168 : C9 00		cmp	#$00		;
+  C16A : F0 13		beq	$C17F		;
+  C16C : A9 19		lda	#$19		;
+  C16E : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
+  C171 : A9 07		lda	#$07		;
+  C173 : 18		clc			;
+  C174 : 65 58		adc	$58		;
+  C176 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
+  C179 : A5 58		lda	$58		;
+  C17B : C9 09		cmp	#$09		;
+  C17D : F0 03		beq	$C182		;
+  C17F : 4C 32 C1		jmp	$C132		;
+
+
 C182 : A0 00		ldy	#$00		;
 C184 : A2 00		ldx	#$00		;
 C186 : A9 01		lda	#$01		;
@@ -184,17 +187,20 @@ C199 : AD 16 40		lda	$4016		;Joy-Pad #1 CtrlReg.
 C19C : AD 16 40		lda	$4016		;Joy-Pad #1 CtrlReg.
 C19F : AD 16 40		lda	$4016		;Joy-Pad #1 CtrlReg.
 C1A2 : 29 01		and	#$01		;
+
 C1A4 : F0 09		beq	$C1AF		;
 C1A6 : 4C A9 C1		jmp	$C1A9		;
+
 C1A9 : 4C 00 C0		jmp	$C000		;
 C1AC : 4C 00 C0		jmp	$C000		;
-C1AF : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C1B2 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C1B5 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C1B8 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
-C1BB : 29 01		and	#$01		;
-C1BD : F0 03		beq	$C1C2		;
-C1BF : 4C AC C1		jmp	$C1AC		;
+  
+  C1AF : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C1B2 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C1B5 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C1B8 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
+  C1BB : 29 01		and	#$01		;
+  C1BD : F0 03		beq	$C1C2		;
+  C1BF : 4C AC C1		jmp	$C1AC		;
 C1C2 : A9 11		lda	#$11		;
 C1C4 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
 C1C7 : A9 00		lda	#$00		;
@@ -202,23 +208,29 @@ C1C9 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
 C1CC : A9 25		lda	#$25		;
 C1CE : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
 C1D1 : A2 00		ldx	#$00		;
-C1D3 : BD F7 C1		lda	$C1F7,x		;
-C1D6 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
-C1D9 : 18		clc			;
-C1DA : E8		inx			;
-C1DB : 8A		txa			;
-C1DC : 0A		asl	a		;
-C1DD : 0A		asl	a		;
-C1DE : 69 25		adc	#$25		;
-C1E0 : C9 45		cmp	#$45		;
-C1E2 : F0 06		beq	$C1EA		;
-C1E4 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
-C1E7 : 4C D3 C1		jmp	$C1D3		;
+  
+  C1D3 : BD F7 C1		lda	$C1F7,x		;
+  C1D6 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
+  C1D9 : 18		clc			;
+  C1DA : E8		inx			;
+  C1DB : 8A		txa			;
+  C1DC : 0A		asl	a		;
+  C1DD : 0A		asl	a		;
+  C1DE : 69 25		adc	#$25		;
+  C1E0 : C9 45		cmp	#$45		;
+  C1E2 : F0 06		beq	$C1EA		;
+
+  C1E4 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
+  C1E7 : 4C D3 C1		jmp	$C1D3		;
+
 C1EA : A9 45		lda	#$45		;
 C1EC : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
 C1EF : A9 17		lda	#$17		;
 C1F1 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
 C1F4 : 4C 82 C1		jmp	$C182		;
+
+
+
 C1F7 : 11 12		ora	($12),y		;
 C1F9 : 13		db	#$13		;
 C1FA : 14		db	#$14		;

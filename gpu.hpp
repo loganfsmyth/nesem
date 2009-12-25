@@ -38,7 +38,6 @@ class GPU : public BusItem{
     void bus_write(uint16_t location, uint8_t data);
 
     int executeCycle();
-    void display();
     int get_pixel_color();
     void printPT(int y);
     void printNT(int y);

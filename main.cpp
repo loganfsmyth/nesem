@@ -23,9 +23,9 @@ bool process_args(int argc, char** argv, string &filename);
 void main_loop();
 
 int main ( int argc, char** argv ){
-  string filename;
+  string filename = "roms/PONG.NES";
   
-  if(!process_args(argc, argv, filename)) return 1;
+  //~ if(!process_args(argc, argv, filename)) return 1;
   
   boost::shared_ptr<Window> win(new Window(512,480));
   boost::shared_ptr<Bus> bus(new Bus());
@@ -63,9 +63,7 @@ int main ( int argc, char** argv ){
   do {
     int time = cpu->executeInst();
     //~ int time = 1;
-    for(int i = 0; i < time; i++ ){
-      gpu->executeCycle();
-      gpu->executeCycle();
+    for(int i = 0; i < 3*time; i++ ){
       gpu->executeCycle();
     }
     
