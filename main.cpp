@@ -39,10 +39,13 @@ int main ( int argc, char** argv ){
   
   boost::shared_ptr<GPU> gpu(new GPU(map, win));
   boost::shared_ptr<DMA> dma(new DMA(bus));
+  boost::shared_ptr<Input> controller1(new Input());
+  
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(ram), 0x0, 0x1FFF);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(gpu), 0x2000, 0x3FFF);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(dma), 0x4014, 0x4014);
   bus->register_item(boost::dynamic_pointer_cast<BusItem>(map), 0x8000, 0xFFFF);
+  //~ bus->register_item(boost::dynamic_pointer_cast<BusItem>(controller1), 0x4000, 0x4000);
   
   boost::shared_ptr<CPU> cpu(new CPU(bus));
 
