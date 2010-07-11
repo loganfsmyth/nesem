@@ -1,9 +1,10 @@
 OPTIONS = -Wall -std=c++0x -ggdb
 EXEC_NAME = nesem
-
+LIBS = -lSDL -lboost_program_options -lboost_thread
 	
 compile: main.o rom.o cpu.o mapper.o gpu.o window.o main.o bus.o dma.o memory.o
-	g++ main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o memory.o -o ${EXEC_NAME} ${OPTIONS} -lSDL -lboost_program_options-mt -lboost_thread-mt
+	g++ main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o memory.o -o ${EXEC_NAME} ${OPTIONS} ${LIBS}
+
 	
 main.o: main.cpp
 	g++ -c main.cpp ${OPTIONS}
