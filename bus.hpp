@@ -2,7 +2,7 @@
 #define __INCLUDE_BUS_HPP
 
 #include <boost/smart_ptr.hpp>
-#include <cstdint>
+#include <boost/cstdint.hpp>
 #include <list>
 #include <iostream>
 

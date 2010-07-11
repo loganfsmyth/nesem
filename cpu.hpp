@@ -1,7 +1,7 @@
 #ifndef INCLUDE_CPU_H
 #define INCLUDE_CPU_H
 
-#include <cstdint>
+#include <boost/cstdint.hpp>
 #include <vector>
 #include <string>
 #include <iostream>

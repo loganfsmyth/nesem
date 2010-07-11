@@ -1,7 +1,7 @@
 #ifndef INCLUDE_GPU_H
 #define INCLUDE_GPU_H
 
-#include <cstdint>
+#include <boost/cstdint.hpp>
 #include <iostream>
 #include <boost/smart_ptr.hpp>
 #include "window.hpp"

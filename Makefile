@@ -1,37 +1,38 @@
-OPTIONS = -Wall -std=c++0x -ggdb
+CC=/home/thesmyth/projects/llvm/Debug+Asserts/bin/clang
+OPTIONS = -Wall #-std=c++0x -ggdb
 EXEC_NAME = nesem
 LIBS = -lSDL -lboost_program_options -lboost_thread
 	
 compile: main.o rom.o cpu.o mapper.o gpu.o window.o main.o bus.o dma.o memory.o
-	g++ main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o memory.o -o ${EXEC_NAME} ${OPTIONS} ${LIBS}
+	${CC} main.o rom.o cpu.o mapper.o gpu.o window.o bus.o dma.o memory.o -o ${EXEC_NAME} ${OPTIONS} ${LIBS}
 
 	
 main.o: main.cpp
-	g++ -c main.cpp ${OPTIONS}
+	${CC} -c main.cpp ${OPTIONS}
 	
 rom.o: rom.cpp rom.hpp
-	g++ -c rom.cpp ${OPTIONS}
+	${CC} -c rom.cpp ${OPTIONS}
 	
 cpu.o: cpu.cpp cpu.hpp
-	g++ -c cpu.cpp ${OPTIONS}
+	${CC} -c cpu.cpp ${OPTIONS}
 	
 mapper.o: mapper.cpp mapper.hpp
-	g++ -c mapper.cpp ${OPTIONS}
+	${CC} -c mapper.cpp ${OPTIONS}
 	
 memory.o: memory.cpp memory.hpp
-	g++ -c memory.cpp ${OPTIONS}
+	${CC} -c memory.cpp ${OPTIONS}
 	
 gpu.o: gpu.cpp gpu.hpp
-	g++ -c gpu.cpp ${OPTIONS}
+	${CC} -c gpu.cpp ${OPTIONS}
 	
 bus.o: bus.cpp bus.hpp
-	g++ -c bus.cpp ${OPTIONS}
+	${CC} -c bus.cpp ${OPTIONS}
 	
 dma.o: dma.cpp dma.hpp
-	g++ -c dma.cpp ${OPTIONS}
+	${CC} -c dma.cpp ${OPTIONS}
 	
 window.o: window.cpp window.hpp
-	g++ -c window.cpp ${OPTIONS}
+	${CC} -c window.cpp ${OPTIONS}
 	
 clean:	
 	rm *.o
