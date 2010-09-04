@@ -1,0 +1,47 @@
+CPU:
+* "Produces" cycles for GPU to consume
+* Fast lookups very important
+** Get it FAST early on so testing is easier later on
+** Make very pluggable
+*** Different types of cores (interpreter / dynarec)
+
+DMA
+* Part of CPU?
+* How does this fit in with cycle production?
+
+GPU
+* "Comsumes" cycles from CPU
+** Triggered on register modification and vblank
+* Use register MACROs instead of hardcoded assignment
+* Render by pixel into opengl
+* Possible accellerations
+** Possibly keep tiles in opengl displaylists?
+*** Can I use opengl and masking to achieve color changing without modifying displaylist?
+** Render one tile at a time?
+
+Mapper
+* FAST
+** Avoid lots of functions
+** No Fancy patterns :P
+
+Input
+* Do it late
+
+OpenGL
+* Flip only on vblank
+
+
+
+
+
+ECSE 548
+ECSE 648
+ECSE 532
+
+597 - circuit sim?
+509 - Prob and randon sig?
+512 - dsp1
+
+
+
+
