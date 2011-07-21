@@ -1,2 +1,8 @@
 *.o
+*.swp
+*.swo
 nesem
+
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
