@@ -66,8 +66,8 @@ int CPU::step() {
   }
   interrupt_status_last = interrupt_status;
 
-  ostringstream address;
-  string address_str;
+//  ostringstream address;
+//  string address_str;
   int time = 0;
 
   uint8_t inst = map->read(PC);

@@ -23,6 +23,4 @@ add_executable( nesem
 
 target_link_libraries( nesem
   SDL
-  boost_program_options
-  boost_thread
 )
