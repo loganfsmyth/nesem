@@ -108,30 +108,6 @@ nesem/fast:
 	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/build
 .PHONY : nesem/fast
 
-src/bus.o: src/bus.cpp.o
-.PHONY : src/bus.o
-
-# target to build an object file
-src/bus.cpp.o:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/bus.cpp.o
-.PHONY : src/bus.cpp.o
-
-src/bus.i: src/bus.cpp.i
-.PHONY : src/bus.i
-
-# target to preprocess a source file
-src/bus.cpp.i:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/bus.cpp.i
-.PHONY : src/bus.cpp.i
-
-src/bus.s: src/bus.cpp.s
-.PHONY : src/bus.s
-
-# target to generate assembly for a file
-src/bus.cpp.s:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/bus.cpp.s
-.PHONY : src/bus.cpp.s
-
 src/cpu.o: src/cpu.cpp.o
 .PHONY : src/cpu.o
 
@@ -155,30 +131,6 @@ src/cpu.s: src/cpu.cpp.s
 src/cpu.cpp.s:
 	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/cpu.cpp.s
 .PHONY : src/cpu.cpp.s
-
-src/dma.o: src/dma.cpp.o
-.PHONY : src/dma.o
-
-# target to build an object file
-src/dma.cpp.o:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/dma.cpp.o
-.PHONY : src/dma.cpp.o
-
-src/dma.i: src/dma.cpp.i
-.PHONY : src/dma.i
-
-# target to preprocess a source file
-src/dma.cpp.i:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/dma.cpp.i
-.PHONY : src/dma.cpp.i
-
-src/dma.s: src/dma.cpp.s
-.PHONY : src/dma.s
-
-# target to generate assembly for a file
-src/dma.cpp.s:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/dma.cpp.s
-.PHONY : src/dma.cpp.s
 
 src/gpu.o: src/gpu.cpp.o
 .PHONY : src/gpu.o
@@ -252,30 +204,6 @@ src/mapper.cpp.s:
 	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/mapper.cpp.s
 .PHONY : src/mapper.cpp.s
 
-src/memory.o: src/memory.cpp.o
-.PHONY : src/memory.o
-
-# target to build an object file
-src/memory.cpp.o:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/memory.cpp.o
-.PHONY : src/memory.cpp.o
-
-src/memory.i: src/memory.cpp.i
-.PHONY : src/memory.i
-
-# target to preprocess a source file
-src/memory.cpp.i:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/memory.cpp.i
-.PHONY : src/memory.cpp.i
-
-src/memory.s: src/memory.cpp.s
-.PHONY : src/memory.s
-
-# target to generate assembly for a file
-src/memory.cpp.s:
-	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/memory.cpp.s
-.PHONY : src/memory.cpp.s
-
 src/rom.o: src/rom.cpp.o
 .PHONY : src/rom.o
 
@@ -333,15 +261,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... nesem"
 	@echo "... rebuild_cache"
-	@echo "... src/bus.o"
-	@echo "... src/bus.i"
-	@echo "... src/bus.s"
 	@echo "... src/cpu.o"
 	@echo "... src/cpu.i"
 	@echo "... src/cpu.s"
-	@echo "... src/dma.o"
-	@echo "... src/dma.i"
-	@echo "... src/dma.s"
 	@echo "... src/gpu.o"
 	@echo "... src/gpu.i"
 	@echo "... src/gpu.s"
@@ -351,9 +273,6 @@ help:
 	@echo "... src/mapper.o"
 	@echo "... src/mapper.i"
 	@echo "... src/mapper.s"
-	@echo "... src/memory.o"
-	@echo "... src/memory.i"
-	@echo "... src/memory.s"
 	@echo "... src/rom.o"
 	@echo "... src/rom.i"
 	@echo "... src/rom.s"
