@@ -36,42 +36,43 @@ void Mapper::setCPU(CPU &c) {
 
 uint8_t Mapper::read(uint16_t addr) {
 
-  // RAM
-  if (addr >= 0x0000 && addr < 0x2000) {
-    return ram[addr & 0x7FF];
-  }
-
-  // GPU Register access
-  else if (addr >= 0x2000 && addr < 0x4000) {
-    return gpu->read(addr & 0x7);
-  }
-
-  // Non-GPU Register access
-  else if (addr >= 0x4000 && addr < 0x4020) {
-
-  }
-
-  // Expansion ROM
-  else if (addr >= 0x4020 && addr < 0x6000) {
-
-  }
-
-  // SRAM
-  else if (addr >= 0x6000 && addr < 0x8000) {
-    return sram[addr & 0x1FFF];
-  }
-
-  // PRG-ROM Bank 1
-  else if (addr >= 0x8000 && addr < 0xC000) {
-    return bank1[addr & 0x3FFF];
-  }
-
   // PRG-ROM Bank 2
-  else if (addr >= 0xC000 && addr < 0x10000) {
+  if (addr & 0xC000) {  // 0xC000 - 0x10000
     return bank2[addr & 0x3FFF];
   }
 
-  return 0x0;
+  // PRG-ROM Bank 1
+  else if (addr & 0x8000) {   // 0x8000 - 0xC000
+    return bank1[addr & 0x3FFF];
+  }
+
+  // SRAM
+  else if ((addr & 0x6000) == 0x6000) {   // 0x6000 - 0x8000
+    return sram[addr & 0x1FFF];
+  }
+
+  else if (addr & 0x4000) {    // 0x4000 - 0x6000
+    // Non-GPU Register access
+    if (addr < 0x4020) { // 0x4000 - 0x4020
+
+    }
+
+    // Expansion ROM
+    else { // 0x4020 - 0x6000
+
+    }
+    return 0;
+  }
+
+  // GPU Register access
+  else if (addr & 0x2000) { // 0x2000 - 0x4000
+    return gpu->read(addr & 0x7);
+  }
+
+  // RAM
+  else {  // 0x0000 - 0x2000
+    return ram[addr & 0x7FF];
+  }
 }
 
 void Mapper::write(uint16_t addr, uint8_t value) {
