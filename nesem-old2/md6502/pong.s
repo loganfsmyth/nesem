@@ -15,6 +15,8 @@ C01A : A9 40		lda	#$40		;
 C01C : 85 10		sta	$10		;
 C01E : A9 48		lda	#$48		;
 C020 : 85 12		sta	$12		;
+
+; Initialize memory to 0x20
 C022 : A9 20		lda	#$20		;
 C024 : 85 20		sta	$20		;
   C026 : 91 00		sta	($00),y		;
@@ -22,6 +24,8 @@ C024 : 85 20		sta	$20		;
   C029 : D0 FB		bne	$C026		;
   C02B : C6 01		dec	$01		;
 C02D : 10 F7		bpl	$C026		;
+
+; Initialize Palettes to 0x27
 C02F : A2 3F		ldx	#$3F		;
 C031 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C034 : A2 00		ldx	#$00		;
@@ -31,6 +35,8 @@ C03B : A0 20		ldy	#$20		;
   C03D : 8E 07 20		stx	$2007		;VRAM I/O Reg.
   C040 : 88		dey			;
 C041 : D0 FA		bne	$C03D		;
+
+; Initialize Palettes with 32 bytes starting at 0xC247
 C043 : A2 3F		ldx	#$3F		;
 C045 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C048 : A2 00		ldx	#$00		;
@@ -41,6 +47,9 @@ C04D : A2 00		ldx	#$00		;
   C055 : E8		inx			;
   C056 : E4 20		cpx	$20		;
 C058 : D0 F5		bne	$C04F		;
+
+
+; Initialize Attribute table 0 with 0x40 bytes starting at 0xC267
 C05A : A2 23		ldx	#$23		;
 C05C : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C05F : A2 C0		ldx	#$C0		;
@@ -51,36 +60,50 @@ C064 : A2 00		ldx	#$00		;
   C06C : E8		inx			;
   C06D : E4 10		cpx	$10		;
 C06F : D0 F5		bne	$C066		;
+
+; Initialize Name table 1
+
+; Set up VRAM Pointer
 C071 : A2 00		ldx	#$00		;
 C073 : A2 20		ldx	#$20		;
 C075 : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
 C078 : A2 00		ldx	#$00		;
 C07A : 8E 06 20		stx	$2006		;VRAM Addr.Reg.
+
+; Copy 0x100 bytes from 0xC2A7
 C07D : A2 00		ldx	#$00		;
 C07F : A0 00		ldy	#$00		;
-  C081 : BD A7 C2		lda	$C2A7,x		;
-  C084 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
-  C087 : E8		inx			;
-  C088 : E0 00		cpx	#$00		;
+C081 : BD A7 C2		lda	$C2A7,x		;
+C084 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
+C087 : E8		inx			;
+C088 : E0 00		cpx	#$00		;
 C08A : D0 F5		bne	$C081		;
+
+; Copy 0x100 bytes from 0xC3F7
 C08C : A0 00		ldy	#$00		;
 C08E : BD F7 C3		lda	$C3F7,x		;
 C091 : 8D 07 20		sta	$2007		;VRAM I/O Reg.
 C094 : E8		inx			;
 C095 : E0 00		cpx	#$00		;
 C097 : D0 F5		bne	$C08E		;
+
+; Copy 0x100 bytes from 0xC3F7
 C099 : A0 00		ldy	#$00		;
 C09B : BD F7 C3		lda	$C3F7,x		;
 C09E : 8D 07 20		sta	$2007		;VRAM I/O Reg.
 C0A1 : E8		inx			;
 C0A2 : E0 00		cpx	#$00		;
 C0A4 : D0 F5		bne	$C09B		;
+
+; Copy 0xC0 bytes from 0xC547
 C0A6 : A0 00		ldy	#$00		;
 C0A8 : BD 47 C5		lda	$C547,x		;
 C0AB : 8D 07 20		sta	$2007		;VRAM I/O Reg.
 C0AE : E8		inx			;
 C0AF : E0 C0		cpx	#$C0		;
 C0B1 : D0 F5		bne	$C0A8		;
+
+; Initialize 0x48 bytes from 0xC1FF to Sprite RAM
 C0B3 : A2 00		ldx	#$00		;
 C0B5 : A9 00		lda	#$00		;
 C0B7 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
@@ -89,11 +112,20 @@ C0BD : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
 C0C0 : E8		inx			;
 C0C1 : E4 12		cpx	$12		;
 C0C3 : D0 F5		bne	$C0BA		;
+
+
+
 C0C5 : A2 00		ldx	#$00		;
+
+; Set bit 4,7 => pt 0x1000,  NMI on vblank
 C0C7 : A9 90		lda	#$90		;
 C0C9 : 8D 00 20		sta	$2000		;PPU CtrlReg.#1
+
+; Set bit 1,2,3,4 => Show background on left 8 px, show sprites on left 8 px, show bg, show sprites
 C0CC : A9 1E		lda	#$1E		;
 C0CE : 8D 01 20		sta	$2001		;PPU CtrlReg.#2
+
+
 C0D1 : A9 FF		lda	#$FF		;
 C0D3 : 85 36		sta	$36		;
 C0D5 : A9 05		lda	#$05		;
@@ -123,11 +155,15 @@ C103 : 85 62		sta	$62		;
 C105 : 85 72		sta	$72		;
 C107 : 85 74		sta	$74		;
   C109 : A9 01		lda	#$01		;
-  C10B : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
-  C10E : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
+
+  ; Strobe the controller ports to latch the controller state
+  C10B : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg. Strobe Joypad 1
+  C10E : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg. Strobe Joypad 2
   C111 : A9 00		lda	#$00		;
-  C113 : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg.
-  C116 : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg.
+  C113 : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg. Unstrobe 1
+  C116 : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg. Unstrobe 2
+
+  ; Shift 7 bits out of the controller to get value for the left arrow of 2nd controller to trigger game start.
   C119 : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
   C11C : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
   C11F : AD 17 40		lda	$4017		;Joy-Pad #2 CtrlReg.
@@ -237,6 +273,8 @@ C1FA : 14		db	#$14		;
 C1FB : 00		brk			;
 C1FC : 15 16		ora	$16,x		;
 C1FE : 14		db	#$14		;
+
+; Start of Sprite RAM source block
 C1FF : 38		sec			;
 C200 : 01 00		ora	($00,x)		;
 C202 : C7		db	#$C7		;
@@ -303,6 +341,10 @@ C243 : 77		db	#$77		;
 C244 : 00		brk			;
 C245 : 00		brk			;
 C246 : 97		db	#$97		;
+; End Sprite RAM block
+
+
+; Start Palette Table
 C247 : 2E 30 2D		rol	$2D30		;
 C24A : 06 2E		asl	$2E		;
 C24C : 22		db	#$22		;
@@ -320,7 +362,11 @@ C25E : 14		db	#$14		;
 C25F : 2E 05 17		rol	$1705		;
 C262 : 24 2E		bit	$2E		;
 C264 : 15 27		ora	$27,x		;
-C266 : 16 00		asl	$00,x		;
+C266 : 16
+; End Palette Table
+
+; Start Attribute table
+C267 : 00		brk			;
 C268 : 00		brk			;
 C269 : 00		brk			;
 C26A : 00		brk			;
@@ -384,6 +430,9 @@ C2A3 : 00		brk			;
 C2A4 : 00		brk			;
 C2A5 : 00		brk			;
 C2A6 : 00		brk			;
+; End Attribute Table
+
+; First 0x100 For Name table
 C2A7 : 00		brk			;
 C2A8 : 00		brk			;
 C2A9 : 00		brk			;
@@ -621,6 +670,8 @@ C3A3 : 00		brk			;
 C3A4 : 00		brk			;
 C3A5 : 00		brk			;
 C3A6 : 00		brk			;
+; End first 0x100 for name table
+
 C3A7 : 00		brk			;
 C3A8 : 00		brk			;
 C3A9 : 06 00		asl	$00		;
@@ -695,6 +746,9 @@ C3F3 : 00		brk			;
 C3F4 : 00		brk			;
 C3F5 : 00		brk			;
 C3F6 : 00		brk			;
+
+
+; Start second and third 0x100 for Name table
 C3F7 : 00		brk			;
 C3F8 : 00		brk			;
 C3F9 : 00		brk			;
@@ -935,6 +989,9 @@ C4F3 : 00		brk			;
 C4F4 : 00		brk			;
 C4F5 : 00		brk			;
 C4F6 : 00		brk			;
+; End second and third 0x100 for name table
+
+
 C4F7 : 06 00		asl	$00		;
 C4F9 : 00		brk			;
 C4FA : 00		brk			;
@@ -1009,7 +1066,10 @@ C542 : 00		brk			;
 C543 : 00		brk			;
 C544 : 00		brk			;
 C545 : 00		brk			;
-C546 : 06 00		asl	$00		;
+C546 : 06
+
+; Start last 0xC0 of the name table
+C547 : 00		brk			;
 C548 : 00		brk			;
 C549 : 00		brk			;
 C54A : 00		brk			;
@@ -1190,6 +1250,8 @@ C603 : 00		brk			;
 C604 : 00		brk			;
 C605 : 00		brk			;
 C606 : 00		brk			;
+; End last 0xC0 of the name table
+
 C607 : 00		brk			;
 C608 : 00		brk			;
 C609 : 00		brk			;

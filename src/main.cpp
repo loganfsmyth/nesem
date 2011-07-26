@@ -8,7 +8,7 @@ using namespace std;
 #include "gpu.hpp"
 #include "mapper.hpp"
 #include "window.hpp"
-
+#include "input.hpp"
 
 int main(int argc, char** argv) {
 
@@ -28,9 +28,14 @@ int main(int argc, char** argv) {
   GPU gpu(m);
 
   Window win(gpu, 512, 512);
+  Input in0(0);
+  Input in1(1);
+
   m.setRom(rom);
   m.setGPU(gpu);
   m.setCPU(cpu);
+  m.setInput(in0, 0);
+  m.setInput(in1, 1);
 
   cpu.reset();
   

@@ -19,6 +19,7 @@ add_executable( nesem
   src/rom.cpp
   src/gpu.cpp
   src/window.cpp
+  src/input.cpp
 )
 
 target_link_libraries( nesem

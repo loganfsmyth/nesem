@@ -6,6 +6,7 @@
 class Rom;
 class GPU;
 class CPU;
+class Input;
 
 class Mapper {
   private:
@@ -17,6 +18,8 @@ class Mapper {
     Rom* rom;
     GPU* gpu;
     CPU* cpu;
+    Input* in0;
+    Input* in1;
 
   public:
     Mapper();
@@ -25,6 +28,7 @@ class Mapper {
     void setRom(Rom &r);
     void setGPU(GPU &g);
     void setCPU(CPU &c);
+    void setInput(Input& in, int controller);
   
 
     // CPU Read/Write

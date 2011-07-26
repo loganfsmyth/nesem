@@ -1,11 +1,14 @@
 
 #include <cstring>
 
+#include <iostream>
+
 #include "mapper.hpp"
 
 #include "rom.hpp"
 #include "gpu.hpp"
 #include "cpu.hpp"
+#include "input.hpp"
 
 Mapper::Mapper() {
   ram = new uint8_t[0x800];
@@ -34,13 +37,21 @@ void Mapper::setCPU(CPU &c) {
   cpu = &c;
 }
 
+void Mapper::setInput(Input& in, int controller) {
+  if (controller) {
+    in1 = &in;
+  }
+  else {
+    in0 = &in;
+  }
+}
 uint8_t Mapper::read(uint16_t addr) {
 
-  switch (addr&0xE000) {
+  switch (addr & 0xE000) {
 
     // RAM: [0x0000 - 0x2000)
     case 0x0000:
-      return ram[addr&0x7FF];
+      return ram[addr & 0x7FF];
 
     // GPU: [0x2000 - 0x4000)
     case 0x2000:
@@ -48,7 +59,13 @@ uint8_t Mapper::read(uint16_t addr) {
 
     // Expansion + IO: [0x4000 - 0x6000)
     case 0x4000:
-      if (addr < 0x4020) {
+      if (addr == 0x4016) {
+        return in0->read();
+      }
+      else if (addr == 0x4017) {
+        return in1->read();
+      }
+      else if (addr < 0x4020) {
 
       }
       else {
@@ -70,15 +87,21 @@ uint8_t Mapper::read(uint16_t addr) {
     case 0xE000:
       return bank2[addr & 0x3FFF];
   }
+
+  return 0; // Should never make it here.
 }
 
 void Mapper::write(uint16_t addr, uint8_t value) {
 
-  switch (addr&0xE000) {
+  if (addr != 0x4016 && addr != 0x4017) {
+//  std::cout << "Mapper Write: 0x" << std::hex << (unsigned int)addr << " = " << (unsigned int)value << std::endl;
+  }
+
+  switch (addr & 0xE000) {
 
     // RAM: [0x0000 - 0x2000)
     case 0x0000:
-      ram[addr&0x7FF] = value;
+      ram[addr & 0x7FF] = value;
       break;
 
     // GPU: [0x2000 - 0x4000)
@@ -112,6 +135,12 @@ void Mapper::write(uint16_t addr, uint8_t value) {
         }
 
         memcpy(gpu->sprite_ram, src, 0x100);
+      }
+      else if (addr == 0x4016) {
+        in0->write(value);
+      }
+      else if (addr == 0x4017) {
+        in1->write(value);
       }
       else if (addr < 0x4020) {
 

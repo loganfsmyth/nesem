@@ -156,6 +156,30 @@ src/gpu.cpp.s:
 	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/gpu.cpp.s
 .PHONY : src/gpu.cpp.s
 
+src/input.o: src/input.cpp.o
+.PHONY : src/input.o
+
+# target to build an object file
+src/input.cpp.o:
+	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/input.cpp.o
+.PHONY : src/input.cpp.o
+
+src/input.i: src/input.cpp.i
+.PHONY : src/input.i
+
+# target to preprocess a source file
+src/input.cpp.i:
+	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/input.cpp.i
+.PHONY : src/input.cpp.i
+
+src/input.s: src/input.cpp.s
+.PHONY : src/input.s
+
+# target to generate assembly for a file
+src/input.cpp.s:
+	$(MAKE) -f CMakeFiles/nesem.dir/build.make CMakeFiles/nesem.dir/src/input.cpp.s
+.PHONY : src/input.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -267,6 +291,9 @@ help:
 	@echo "... src/gpu.o"
 	@echo "... src/gpu.i"
 	@echo "... src/gpu.s"
+	@echo "... src/input.o"
+	@echo "... src/input.i"
+	@echo "... src/input.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

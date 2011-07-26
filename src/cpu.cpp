@@ -73,7 +73,7 @@ int CPU::step() {
   uint8_t inst = map->read(PC);
    
   
-  //~ cout << hex << "0x" << PC << ": " << "0x" << (int)inst << " " << get_inst_str(inst) << endl;
+//  cout << hex << "0x" << PC << ": " << "0x" << (unsigned int)inst << " " << get_inst_str(inst) << endl;
 //  cout << get_inst_str(inst) << endl;
 //  cout << hex << "0x" << (unsigned int)AC << dec  << endl;
 //  cout << (int)map->read(0x1ff) << endl;
