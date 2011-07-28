@@ -82,8 +82,7 @@ void Window::DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B){
 
     case 3: // Slow 24-bpp mode, usually not used
       bufp8 = (Uint8 *)screen->pixels + y*screen->pitch + x * 3;
-      if(SDL_BYTEORDER == SDL_LIL_ENDIAN)
-      {
+      if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
         bufp8[0] = color;
         bufp8[1] = color >> 8;
         bufp8[2] = color >> 16;

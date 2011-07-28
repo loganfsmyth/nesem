@@ -154,9 +154,9 @@ C101 : 85 58		sta	$58		;
 C103 : 85 62		sta	$62		;
 C105 : 85 72		sta	$72		;
 C107 : 85 74		sta	$74		;
-  C109 : A9 01		lda	#$01		;
 
   ; Strobe the controller ports to latch the controller state
+  C109 : A9 01		lda	#$01		;
   C10B : 8D 16 40		sta	$4016		;Joy-Pad #1 CtrlReg. Strobe Joypad 1
   C10E : 8D 17 40		sta	$4017		;Joy-Pad #2 CtrlReg. Strobe Joypad 2
   C111 : A9 00		lda	#$00		;
@@ -174,18 +174,19 @@ C107 : 85 74		sta	$74		;
   C12E : 29 01		and	#$01		;
 C130 : F0 D7		beq	$C109		;
 
-  C132 : 20 67 C6		jsr	$C667		;
-  C135 : 20 D5 C8		jsr	$C8D5		;
-  C138 : 20 0E C8		jsr	$C80E		;
-  C13B : 20 D2 C7		jsr	$C7D2		;
-  C13E : 20 F0 C7		jsr	$C7F0		;
-  C141 : 20 63 C8		jsr	$C863		;
-  C144 : 20 D2 C7		jsr	$C7D2		;
-  C147 : 20 F0 C7		jsr	$C7F0		;
-  C14A : 4C 4D C1		jmp	$C14D		;
-  C14D : A5 56		lda	$56		;
-  C14F : C9 00		cmp	#$00		;
-  C151 : F0 13		beq	$C166		;
+C132 : 20 67 C6		jsr	$C667		;
+C135 : 20 D5 C8		jsr	$C8D5		;
+C138 : 20 0E C8		jsr	$C80E		;
+C13B : 20 D2 C7		jsr	$C7D2		;
+C13E : 20 F0 C7		jsr	$C7F0		;
+C141 : 20 63 C8		jsr	$C863		;
+C144 : 20 D2 C7		jsr	$C7D2		;
+C147 : 20 F0 C7		jsr	$C7F0		;
+C14A : 4C 4D C1		jmp	$C14D		;
+
+C14D : A5 56		lda	$56		;
+C14F : C9 00		cmp	#$00		;
+C151 : F0 13		beq	$C166		;
   C153 : A9 15		lda	#$15		;
   C155 : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
   C158 : A9 07		lda	#$07		;
@@ -195,19 +196,19 @@ C130 : F0 D7		beq	$C109		;
   C160 : A5 56		lda	$56		;
   C162 : C9 09		cmp	#$09		;
   C164 : F0 1C		beq	$C182		;
-  C166 : A5 58		lda	$58		;
-  C168 : C9 00		cmp	#$00		;
-  C16A : F0 13		beq	$C17F		;
-  C16C : A9 19		lda	#$19		;
-  C16E : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
-  C171 : A9 07		lda	#$07		;
-  C173 : 18		clc			;
-  C174 : 65 58		adc	$58		;
-  C176 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
-  C179 : A5 58		lda	$58		;
-  C17B : C9 09		cmp	#$09		;
-  C17D : F0 03		beq	$C182		;
-  C17F : 4C 32 C1		jmp	$C132		;
+C166 : A5 58		lda	$58		;
+C168 : C9 00		cmp	#$00		;
+C16A : F0 13		beq	$C17F		;
+C16C : A9 19		lda	#$19		;
+C16E : 8D 03 20		sta	$2003		;SPR-RAM Addr.Reg.
+C171 : A9 07		lda	#$07		;
+C173 : 18		clc			;
+C174 : 65 58		adc	$58		;
+C176 : 8D 04 20		sta	$2004		;SPR-RAM I/O Reg.
+C179 : A5 58		lda	$58		;
+C17B : C9 09		cmp	#$09		;
+C17D : F0 03		beq	$C182		;
+C17F : 4C 32 C1		jmp	$C132		;
 
 
 C182 : A0 00		ldy	#$00		;

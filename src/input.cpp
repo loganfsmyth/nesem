@@ -1,6 +1,9 @@
 
 #include "input.hpp"
 
+#include <iostream>
+using namespace std;
+
 Input::Input(int controller) {
   key_state = SDL_GetKeyState(&numkeys);
 
@@ -38,9 +41,6 @@ void Input::write(uint8_t value) {
   if (value & 0x01) {
     pressed = (key_state[abutton] << 0) | (key_state[bbutton] << 1) | (key_state[select] << 2) | (key_state[start] << 3) |
               (key_state[up] << 4) | (key_state[down] << 5) | (key_state[left] << 6) | (key_state[right] << 7);
-  }
-  else {
-
   }
 }
 

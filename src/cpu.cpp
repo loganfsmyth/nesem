@@ -95,11 +95,9 @@ int CPU::step() {
   PC += inst_info.length;
   time += inst_info.time;
 
-//  uint16_t addr = get_address(inst_info.type, arg1, arg2);
 
-
-  uint8_t src = read(inst_info.type, arg1, arg2);
   uint16_t temp;
+  uint8_t src = 0x00;
 
   switch(inst){
     case ADC_IMM:
@@ -110,6 +108,7 @@ int CPU::step() {
     case ADC_ABY:
     case ADC_INX:
     case ADC_INY:
+      src = read(inst_info.type, arg1, arg2);
       temp = src + AC + (IF_CARRY() ? 1 : 0);
       SET_ZERO(temp & 0xff);        /* This is not valid in decimal mode */
       if (IF_DECIMAL()) {
@@ -135,6 +134,7 @@ int CPU::step() {
     case SBC_ABY:
     case SBC_INX:
     case SBC_INY:
+      src = read(inst_info.type, arg1, arg2);
       temp = AC - src - (IF_CARRY() ? 0 : 1);
       SET_SIGN(temp);
       SET_ZERO(temp & 0xff);        /* Sign and Zero are invalid in decimal mode */
@@ -155,6 +155,7 @@ int CPU::step() {
     case AND_ABY:
     case AND_INX:
     case AND_INY:
+      src = read(inst_info.type, arg1, arg2);
       src &= AC;
       SET_SIGN(src);
       SET_ZERO(src);
@@ -169,6 +170,7 @@ int CPU::step() {
     case CMP_ABY:
     case CMP_INX:
     case CMP_INY:
+      src = read(inst_info.type, arg1, arg2);
       temp = AC - src;
       SET_CARRY(temp < 0x100);
       SET_SIGN(temp);
@@ -183,6 +185,7 @@ int CPU::step() {
     case EOR_ABY:
     case EOR_INX:
     case EOR_INY:
+      src = read(inst_info.type, arg1, arg2);
       src ^= AC;
       SET_SIGN(src);
       SET_ZERO(src);
@@ -197,6 +200,7 @@ int CPU::step() {
     case ORA_ABY:
     case ORA_INX:
     case ORA_INY:
+      src = read(inst_info.type, arg1, arg2);
       src |= AC;
       SET_SIGN(src);
       SET_ZERO(src);
@@ -211,6 +215,7 @@ int CPU::step() {
     case LDA_ABY:
     case LDA_INX:
     case LDA_INY:
+      src = read(inst_info.type, arg1, arg2);
       SET_SIGN(src);
       SET_ZERO(src);
       AC = src;
@@ -260,6 +265,7 @@ int CPU::step() {
       break;
 
     case BPL_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (!IF_SIGN()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -267,6 +273,7 @@ int CPU::step() {
       break;
 
     case BMI_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (IF_SIGN()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -274,6 +281,7 @@ int CPU::step() {
       break;
 
     case BVC_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (!IF_OVERFLOW()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -281,6 +289,7 @@ int CPU::step() {
       break;
 
     case BVS_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (IF_OVERFLOW()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -288,6 +297,7 @@ int CPU::step() {
       break;
 
     case BCC_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (!IF_CARRY()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -295,6 +305,7 @@ int CPU::step() {
       break;
 
     case BCS_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (IF_CARRY()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -302,12 +313,14 @@ int CPU::step() {
       break;
 
     case BNE_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (!IF_ZERO()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
       }
       break;
     case BEQ_REL:
+      src = read(inst_info.type, arg1, arg2);
       if (IF_ZERO()) {
         time += ((PC & 0xFF00) != ((PC + (int8_t)src) & 0xFF00) ? 2 : 1);
         PC = PC + (int8_t)src;
@@ -411,6 +424,7 @@ int CPU::step() {
     case LSR_ZPX:
     case LSR_AB:
     case LSR_ABX:
+      src = read(inst_info.type, arg1, arg2);
       SET_CARRY(src & 0x01);
       src >>= 1;
       SET_SIGN(src);
@@ -424,6 +438,7 @@ int CPU::step() {
     case ROL_ZPX:
     case ROL_AB:
     case ROL_ABX:
+      src = read(inst_info.type, arg1, arg2);
       temp = src;
       temp <<= 1;
       if (IF_CARRY()) temp |= 0x1;
@@ -441,6 +456,7 @@ int CPU::step() {
     case ROR_ZPX:
     case ROR_AB:
     case ROR_ABX:
+      src = read(inst_info.type, arg1, arg2);
       temp = src;
       if (IF_CARRY()) temp |= 0x100;
       SET_CARRY(temp & 0x01);
@@ -457,6 +473,7 @@ int CPU::step() {
     case ASL_ZPX:
     case ASL_AB:
     case ASL_ABX:
+      src = read(inst_info.type, arg1, arg2);
       SET_CARRY(src & 0x80);
       src <<= 1;
       SET_SIGN(src);
@@ -470,6 +487,7 @@ int CPU::step() {
     case LDX_ZPY:
     case LDX_AB:
     case LDX_ABX:
+      src = read(inst_info.type, arg1, arg2);
       SET_SIGN(src);
       SET_ZERO(src);
       XR = src;
@@ -480,6 +498,7 @@ int CPU::step() {
     case LDY_ZPX:
     case LDY_AB:
     case LDY_ABX:
+      src = read(inst_info.type, arg1, arg2);
       SET_SIGN(src);
       SET_ZERO(src);
       YR = src;
@@ -489,6 +508,7 @@ int CPU::step() {
     case DEC_ZPX:
     case DEC_AB:
     case DEC_ABX:
+      src = read(inst_info.type, arg1, arg2);
       src = (src - 1) & 0xff;
       SET_SIGN(src);
       SET_ZERO(src);
@@ -500,6 +520,7 @@ int CPU::step() {
     case INC_ZPX:
     case INC_AB:
     case INC_ABX:
+      src = read(inst_info.type, arg1, arg2);
       src = (src + 1) & 0xff;
       SET_SIGN(src);
       SET_ZERO(src);
@@ -526,6 +547,7 @@ int CPU::step() {
     case CPX_IMM:
     case CPX_ZP:
     case CPX_AB:
+      src = read(inst_info.type, arg1, arg2);
       temp = XR - src;
       SET_CARRY(temp < 0x100);
       SET_SIGN(temp);
@@ -535,6 +557,7 @@ int CPU::step() {
     case CPY_IMM:
     case CPY_ZP:
     case CPY_AB:
+      src = read(inst_info.type, arg1, arg2);
       temp = YR - src;
       SET_CARRY(temp < 0x100);
       SET_SIGN(temp);
@@ -543,6 +566,7 @@ int CPU::step() {
 
     case BIT_ZP:
     case BIT_AB:
+      src = read(inst_info.type, arg1, arg2);
       SET_SIGN(src);
       SET_OVERFLOW(0x40 & src);        /* Copy bit 6 to OVERFLOW flag. */
       SET_ZERO(src & AC);
