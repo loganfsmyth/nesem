@@ -353,49 +353,38 @@ int GPU::get_pixel_color(){
 }
 
 void GPU::render_sprites(){
-  
+
+  int pix_color;
+
   for(int i = 0; i < 0x100; i += 0x04){
 
+    unsigned int y_offset = sprite_ram[i]+1;
+    int pt_num = sprite_ram[i+1] << 4;
+
+    unsigned int x_offset = sprite_ram[i+3];
+
+    uint8_t color_bits = (sprite_ram[i+2] & 0x03) << 2;
+
+    int patterndat_one, patterndat_two;
+
     for(unsigned int y = 0; y < 8; y++){
+
+      int po = pt_num | 0x0 | y;
+      int pt = pt_num | 0x8 | y;
+      if((reg_ctrl & 0x08) != 0) {
+        po += 0x1000;
+        pt += 0x1000;
+      }
+      GPU_MEM_READ(po, patterndat_one);
+      GPU_MEM_READ(pt, patterndat_two);
+
       for(unsigned int x = 0; x < 8; x++){
 
+        int pix_index = 0x3F10 | ((patterndat_one >> (7-x)) & 0x01) | ((patterndat_two >> (6-x)) & 0x01) | color_bits;
 
-        unsigned int y_offset = sprite_ram[i]-1;
-        int pt_num = sprite_ram[i+1];
+        GPU_MEM_READ(pix_index, pix_color);
 
-        unsigned int x_offset = sprite_ram[i+3];
-        
-        int po = (pt_num << 4) + 0x0 + y;
-        int pt = (pt_num << 4) + 0x8 + y;
-        if((reg_ctrl&0x08) != 0) {
-          po += 0x1000;
-          pt += 0x1000;
-        }
-        
-        
-        int patterndat_one;
-        int patterndat_two;
-
-        GPU_MEM_READ(po, patterndat_one);
-        GPU_MEM_READ(pt, patterndat_two);
-
-        int shift = x&0x7;
-
-        patterndat_one >>= 7-shift;
-        patterndat_one &= 0x1;
-        patterndat_two >>= 7-shift;
-        patterndat_two &= 0x1;
-        int pix_index = (patterndat_one)|(patterndat_two << 1)|(sprite_ram[i+2]&0x3 << 2);
-        int pix_color;
-
-        GPU_MEM_READ((0x31F0|pix_index), pix_color);
-        
-        //~ cout << hex << "S: 0x" << po << " 0x" << pt << " - 0x" << pix_index << "(0x" << x_offset << ",0x" << y_offset << ")0x" << pt_num << dec << endl;
-
-        //~ cout << "(" << (unsigned int)(x+x_offset) << "," << (int)(y+y_offset) << ")" << "(" << (int)(x_offset) << "," << (int)(y_offset) << ")" << endl;
-        
         if((x+x_offset) < 256 && (y+y_offset) < 240) {
-        
           vbuffer[(y + y_offset)*256 + (x + x_offset)] = paletteLookup(pix_color);
         }
       }
