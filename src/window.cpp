@@ -32,7 +32,6 @@ Window::~Window(){
 void Window::gpuData(color* data) {
 
 
-
   if ( SDL_MUSTLOCK(screen) ){
     if ( SDL_LockSurface(screen) < 0 ){
       return;
@@ -54,7 +53,6 @@ void Window::gpuData(color* data) {
   }
 
   SDL_Flip(screen);
-
   boost::posix_time::ptime start = boost::posix_time::microsec_clock::local_time();
 
   cout << "FPS: " << (1000.0/(start - last_frame).total_milliseconds()) << endl;

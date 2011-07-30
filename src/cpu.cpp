@@ -753,191 +753,190 @@ uint8_t CPU::read(int type, uint8_t arg1, uint8_t arg2){
 
 struct instruction_info CPU::get_instruction_info(uint8_t inst){
   switch(inst){
-    case ADC_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case ADC_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case ADC_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case ADC_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case ADC_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case ADC_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case ADC_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case ADC_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case ADC_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case ADC_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case ADC_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case ADC_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case ADC_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case ADC_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case ADC_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case ADC_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case SBC_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case SBC_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case SBC_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case SBC_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case SBC_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case SBC_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case SBC_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case SBC_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case SBC_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case SBC_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case SBC_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case SBC_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case SBC_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case SBC_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case SBC_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case SBC_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case AND_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case AND_ZP: return  (struct instruction_info){2, MEM_ZP,2,'2'};
-    case AND_ZPX: return  (struct instruction_info){2, MEM_ZPX,3,'3'};
-    case AND_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case AND_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case AND_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case AND_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case AND_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case AND_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case AND_ZP:  return  (struct instruction_info){2, MEM_ZP,  2, '2'};
+    case AND_ZPX: return  (struct instruction_info){2, MEM_ZPX, 3, '3'};
+    case AND_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case AND_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case AND_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case AND_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case AND_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case CMP_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case CMP_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case CMP_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case CMP_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case CMP_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case CMP_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case CMP_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case CMP_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case CMP_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case CMP_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case CMP_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case CMP_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case CMP_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case CMP_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case CMP_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case CMP_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case EOR_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case EOR_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case EOR_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case EOR_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case EOR_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case EOR_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case EOR_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case EOR_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case EOR_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case EOR_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case EOR_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case EOR_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case EOR_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case EOR_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case EOR_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case EOR_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case ORA_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case ORA_ZP: return  (struct instruction_info){2, MEM_ZP,2,'2'};
-    case ORA_ZPX: return  (struct instruction_info){2, MEM_ZPX,3,'3'};
-    case ORA_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case ORA_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case ORA_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case ORA_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case ORA_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case ORA_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case ORA_ZP:  return  (struct instruction_info){2, MEM_ZP,  2, '2'};
+    case ORA_ZPX: return  (struct instruction_info){2, MEM_ZPX, 3, '3'};
+    case ORA_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case ORA_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case ORA_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case ORA_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case ORA_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case LDA_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case LDA_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case LDA_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case LDA_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case LDA_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
-    case LDA_ABY: return  (struct instruction_info){3, MEM_ABY,4,'+'};
-    case LDA_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case LDA_INY: return  (struct instruction_info){2, MEM_INY,5,'+'};
+    case LDA_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case LDA_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case LDA_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case LDA_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case LDA_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
+    case LDA_ABY: return  (struct instruction_info){3, MEM_ABY, 4, '+'};
+    case LDA_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case LDA_INY: return  (struct instruction_info){2, MEM_INY, 5, '+'};
 
-    case STA_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case STA_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case STA_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case STA_ABX: return  (struct instruction_info){3, MEM_ABX,5,'5'};
-    case STA_ABY: return  (struct instruction_info){3, MEM_ABY,5,'5'};
-    case STA_INX: return  (struct instruction_info){2, MEM_INX,6,'6'};
-    case STA_INY: return  (struct instruction_info){2, MEM_INY,6,'6'};
+    case STA_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case STA_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case STA_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case STA_ABX: return  (struct instruction_info){3, MEM_ABX, 5, '5'};
+    case STA_ABY: return  (struct instruction_info){3, MEM_ABY, 5, '5'};
+    case STA_INX: return  (struct instruction_info){2, MEM_INX, 6, '6'};
+    case STA_INY: return  (struct instruction_info){2, MEM_INY, 6, '6'};
 
-    case TXS_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case TSX_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case PHA_IMP: return  (struct instruction_info){1, MEM_IMP,3,'3'};
-    case PLA_IMP: return  (struct instruction_info){1, MEM_IMP,4,'4'};
-    case PHP_IMP: return  (struct instruction_info){1, MEM_IMP,3,'3'};
-    case PLP_IMP: return  (struct instruction_info){1, MEM_IMP,4,'4'};
+    case TXS_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case TSX_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case PHA_IMP: return  (struct instruction_info){1, MEM_IMP, 3, '3'};
+    case PLA_IMP: return  (struct instruction_info){1, MEM_IMP, 4, '4'};
+    case PHP_IMP: return  (struct instruction_info){1, MEM_IMP, 3, '3'};
+    case PLP_IMP: return  (struct instruction_info){1, MEM_IMP, 4, '4'};
 
-    case BPL_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BMI_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BVC_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BVS_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BCC_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BCS_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BNE_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
-    case BEQ_REL: return  (struct instruction_info){2, MEM_REL,2,' '};
+    case BPL_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BMI_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BVC_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BVS_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BCC_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BCS_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BNE_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
+    case BEQ_REL: return  (struct instruction_info){2, MEM_REL, 2, ' '};
 
-    case BRK_IMP: return  (struct instruction_info){1, MEM_IMP,7,'7'};
+    case BRK_IMP: return  (struct instruction_info){1, MEM_IMP, 7, '7'};
 
-    case CLC_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case SEC_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case CLI_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case SEI_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case CLV_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case CLD_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case SED_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
+    case CLC_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case SEC_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case CLI_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case SEI_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case CLV_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case CLD_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case SED_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
 
-    case NOP_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
+    case NOP_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
 
-    case TAX_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case TXA_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case DEX_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case INX_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case TAY_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case TYA_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case DEY_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
-    case INY_IMP: return  (struct instruction_info){1, MEM_IMP,2,'2'};
+    case TAX_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case TXA_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case DEX_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case INX_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case TAY_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case TYA_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case DEY_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
+    case INY_IMP: return  (struct instruction_info){1, MEM_IMP, 2, '2'};
 
-    case RTI_IMP: return  (struct instruction_info){1, MEM_IMP,6,'6'};
+    case RTI_IMP: return  (struct instruction_info){1, MEM_IMP, 6, '6'};
 
-    case RTS_IMP: return  (struct instruction_info){1, MEM_IMP,6,'6'};
+    case RTS_IMP: return  (struct instruction_info){1, MEM_IMP, 6, '6'};
 
-    case LSR_AC: return  (struct instruction_info){1, MEM_AC,2,'2'};
-    case LSR_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case LSR_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case LSR_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case LSR_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case LSR_AC:  return  (struct instruction_info){1, MEM_AC,  2, '2'};
+    case LSR_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case LSR_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case LSR_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case LSR_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case ROL_AC: return  (struct instruction_info){1, MEM_AC,2,'2'};
-    case ROL_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case ROL_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case ROL_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case ROL_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case ROL_AC:  return  (struct instruction_info){1, MEM_AC,  2, '2'};
+    case ROL_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case ROL_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case ROL_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case ROL_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case ROR_AC: return  (struct instruction_info){1, MEM_AC,2,'2'};
-    case ROR_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case ROR_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case ROR_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case ROR_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case ROR_AC:  return  (struct instruction_info){1, MEM_AC,  2, '2'};
+    case ROR_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case ROR_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case ROR_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case ROR_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case ASL_AC: return  (struct instruction_info){1, MEM_AC,2,'2'};
-    case ASL_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case ASL_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case ASL_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case ASL_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case ASL_AC:  return  (struct instruction_info){1, MEM_AC,  2, '2'};
+    case ASL_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case ASL_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case ASL_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case ASL_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case LDX_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case LDX_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case LDX_ZPY: return  (struct instruction_info){2, MEM_ZPY,4,'4'};
-    case LDX_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case LDX_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
+    case LDX_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case LDX_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case LDX_ZPY: return  (struct instruction_info){2, MEM_ZPY, 4, '4'};
+    case LDX_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case LDX_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
 
-    case LDY_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case LDY_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case LDY_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case LDY_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
-    case LDY_ABX: return  (struct instruction_info){3, MEM_ABX,4,'+'};
+    case LDY_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case LDY_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case LDY_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case LDY_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
+    case LDY_ABX: return  (struct instruction_info){3, MEM_ABX, 4, '+'};
 
-    case DEC_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case DEC_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case DEC_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case DEC_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case DEC_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case DEC_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case DEC_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case DEC_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case INC_ZP: return  (struct instruction_info){2, MEM_ZP,5,'5'};
-    case INC_ZPX: return  (struct instruction_info){2, MEM_ZPX,6,'6'};
-    case INC_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
-    case INC_ABX: return  (struct instruction_info){3, MEM_ABX,7,'7'};
+    case INC_ZP:  return  (struct instruction_info){2, MEM_ZP,  5, '5'};
+    case INC_ZPX: return  (struct instruction_info){2, MEM_ZPX, 6, '6'};
+    case INC_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
+    case INC_ABX: return  (struct instruction_info){3, MEM_ABX, 7, '7'};
 
-    case STX_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case STX_ZPY: return  (struct instruction_info){2, MEM_ZPY,4,'4'};
-    case STX_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
+    case STX_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case STX_ZPY: return  (struct instruction_info){2, MEM_ZPY, 4, '4'};
+    case STX_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
 
-    case STY_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case STY_ZPX: return  (struct instruction_info){2, MEM_ZPX,4,'4'};
-    case STY_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
+    case STY_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case STY_ZPX: return  (struct instruction_info){2, MEM_ZPX, 4, '4'};
+    case STY_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
 
-    case CPX_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case CPX_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case CPX_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
+    case CPX_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case CPX_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case CPX_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
 
-    case CPY_IMM: return  (struct instruction_info){2, MEM_IMM,2,'2'};
-    case CPY_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case CPY_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
+    case CPY_IMM: return  (struct instruction_info){2, MEM_IMM, 2, '2'};
+    case CPY_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case CPY_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
 
-    case BIT_ZP: return  (struct instruction_info){2, MEM_ZP,3,'3'};
-    case BIT_AB: return  (struct instruction_info){3, MEM_AB,4,'4'};
+    case BIT_ZP:  return  (struct instruction_info){2, MEM_ZP,  3, '3'};
+    case BIT_AB:  return  (struct instruction_info){3, MEM_AB,  4, '4'};
 
-    case JMP_AB: return  (struct instruction_info){3, MEM_AB,3,'3'};
-    case JMP_IN: return  (struct instruction_info){3, MEM_IN,5,'5'};
+    case JMP_AB:  return  (struct instruction_info){3, MEM_AB,  3, '3'};
+    case JMP_IN:  return  (struct instruction_info){3, MEM_IN,  5, '5'};
 
-    case JSR_AB: return  (struct instruction_info){3, MEM_AB,6,'6'};
+    case JSR_AB:  return  (struct instruction_info){3, MEM_AB,  6, '6'};
 
 
-    default:
-      return (struct instruction_info){0,0,0,'0'};
+    default:      return  (struct instruction_info){0, 0,       0, '0'};
   }
 
 }
