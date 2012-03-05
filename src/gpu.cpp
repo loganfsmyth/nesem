@@ -99,13 +99,9 @@ int GPU::step(int steps){
       else if(scanline == 241){
         reg_status &= 0x7F;        //disable vblank flag
         reg_status |= 0x80;
-        
-        if((reg_mask&0x10) != 0) render_sprites();
-        
+
+        if((reg_mask & 0x10) != 0) render_sprites();
         vblank_callback(vbuffer);
-
-        //~ cout << "Set Flag 0x" << hex << (int)vram_address_temp << " 0x" << (int)vram_address_reg << dec << endl;
-
       }
       else if(scanline > 0 && scanline < 241){
         vram_address_reg &= 0xFBE0;        //reset bit 10 (The X NT) and bits 0-4(the x loc)
@@ -126,7 +122,6 @@ int GPU::step(int steps){
           vram_address_reg &= 0x0FFF; //clear 12-15
           vram_address_reg |= ((vram_temp&0x7000)+0x1000) & 0x7000;        //increment 12-14
         }
-        
       }
 
       if(scanline == 261) scanline = 0;
@@ -325,15 +320,11 @@ int GPU::get_pixel_color(){
   int pt_num;
   GPU_MEM_READ(((vram_address_reg&0x0FFF)|0x2000), pt_num);
 
-
-
-  
   int y_offset = (vram_address_reg >> 12)&0x7;
 
   int po = (pt_num << 4)+0x0 + y_offset;
   int pt = (pt_num << 4)+0x8 + y_offset;
-  
-  
+
   int patterndat_one;
   int patterndat_two;
 
@@ -356,7 +347,7 @@ void GPU::render_sprites(){
 
   int pix_color;
 
-  for(int i = 0; i < 0x100; i += 0x04){
+  for (int i = 0; i < 0x100; i += 0x04) {
 
     unsigned int y_offset = sprite_ram[i]+1;
     int pt_num = sprite_ram[i+1] << 4;
@@ -367,7 +358,7 @@ void GPU::render_sprites(){
 
     int patterndat_one, patterndat_two;
 
-    for(unsigned int y = 0; y < 8; y++){
+    for (unsigned int y = 0; y < 8; y++) {
 
       int po = pt_num | 0x0 | y;
       int pt = pt_num | 0x8 | y;
@@ -392,7 +383,7 @@ void GPU::render_sprites(){
   }
 }
 
-color GPU::paletteLookup(int num){
+inline color GPU::paletteLookup(int num){
   switch(num){
     case 0x0: return (color){0x75,0x75,0x75};
     case 0x1: return (color){0x27,0x1B,0x8F};

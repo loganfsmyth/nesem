@@ -18,8 +18,6 @@ class Window{
     Window(GPU &gpu, int width, int height);
     ~Window();
 
-    void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B);
-
     void gpuData(color* data);
 
     bool check_exit();

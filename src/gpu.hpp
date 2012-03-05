@@ -18,6 +18,8 @@
 #define GPU_REG_ADDR      0x6
 #define GPU_REG_DATA      0x7
 
+#define GPU_CYCLES_PER_FRAME  (341 * 262)
+
 struct color{
   uint8_t r;
   uint8_t g;

@@ -31,6 +31,11 @@ Window::~Window(){
 
 void Window::gpuData(color* data) {
 
+  Uint32 col;
+
+  Uint8 *bufp8;
+  Uint16 *bufp16;
+  Uint32 *bufp32;
 
   if ( SDL_MUSTLOCK(screen) ){
     if ( SDL_LockSurface(screen) < 0 ){
@@ -41,10 +46,47 @@ void Window::gpuData(color* data) {
   for (int y = 0; y < 240; y++) {
     for (int x = 0; x < 256; x++) {
       color* c = &data[y*256 + x];
-      DrawPixel(2*x, 2*y, c->r, c->g, c->b);
-      DrawPixel(2*x + 1, 2*y, c->r, c->g, c->b);
-      DrawPixel(2*x, 2*y + 1, c->r, c->g, c->b);
-      DrawPixel(2*x + 1, 2*y + 1, c->r, c->g, c->b);
+
+      col = SDL_MapRGB(screen->format, c->r, c->g, c->b);
+
+      for (int xs = 0; xs < 2; xs++) {
+        for (int ys = 0; ys < 2; ys++) {
+
+          switch (screen->format->BytesPerPixel){
+            case 1: // Assuming 8-bpp
+              bufp8 = (Uint8 *)screen->pixels + (2*y + ys)*screen->pitch + (2*x+xs);
+              *bufp8 = col;
+              break;
+
+            case 2: // Probably 15-bpp or 16-bpp
+              bufp16 = (Uint16 *)screen->pixels + (2*y+ys)*screen->pitch/2 + (2*x+xs);
+              *bufp16 = col;
+              break;
+
+            case 3: // Slow 24-bpp mode, usually not used
+              bufp8 = (Uint8 *)screen->pixels + (2*y+ys)*screen->pitch + (2*x+xs) * 3;
+              if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
+                bufp8[0] = col;
+                bufp8[1] = col >> 8;
+                bufp8[2] = col >> 16;
+              }
+              else {
+                bufp8[2] = col;
+                bufp8[1] = col >> 8;
+                bufp8[0] = col >> 16;
+              }
+              break;
+
+            case 4: // Probably 32-bpp
+              bufp32 = (Uint32 *)screen->pixels + (2*y+ys)*screen->pitch/4 + (2*x+xs);
+              *bufp32 = col;
+              break;
+            default:
+              break;
+          }
+
+        }
+      }
     }
   }
 
@@ -59,48 +101,6 @@ void Window::gpuData(color* data) {
 
   last_frame = start;
 }
-
-void Window::DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B){
-  Uint32 color = SDL_MapRGB(screen->format, R, G, B);
-
-  Uint8 *bufp8;
-  Uint16 *bufp16;
-  Uint32 *bufp32;
-
-  switch (screen->format->BytesPerPixel){
-    case 1: // Assuming 8-bpp
-      bufp8 = (Uint8 *)screen->pixels + y*screen->pitch + x;
-      *bufp8 = color;
-      break;
-
-    case 2: // Probably 15-bpp or 16-bpp
-      bufp16 = (Uint16 *)screen->pixels + y*screen->pitch/2 + x;
-      *bufp16 = color;
-      break;
-
-    case 3: // Slow 24-bpp mode, usually not used
-      bufp8 = (Uint8 *)screen->pixels + y*screen->pitch + x * 3;
-      if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
-        bufp8[0] = color;
-        bufp8[1] = color >> 8;
-        bufp8[2] = color >> 16;
-      }
-      else {
-        bufp8[2] = color;
-        bufp8[1] = color >> 8;
-        bufp8[0] = color >> 16;
-      }
-      break;
-
-    case 4: // Probably 32-bpp
-      bufp32 = (Uint32 *)screen->pixels + y*screen->pitch/4 + x;
-      *bufp32 = color;
-      break;
-    default:
-      break;
-  }
-}
-
 
 bool Window::check_exit() {
 

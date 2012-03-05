@@ -10,16 +10,18 @@ using namespace std;
 #include "window.hpp"
 #include "input.hpp"
 
+#define FRAMERATE   5
+
 int main(int argc, char** argv) {
 
   if (argc != 2) return 1;
 
   int steps;
+  float extratime;
+  long cputime;
 
   std::string filename(argv[1]);
-//  std::string filename("roms/MarioBro.nes");
 
-  cout << "AW" << endl;
   Rom rom(filename);
 
   rom.print_stats();
@@ -40,14 +42,13 @@ int main(int argc, char** argv) {
   m.setInput(in1, 1);
 
   cpu.reset();
-  
 
   int count = 0;
 
-//  boost::posix_time::ptime start_time = boost::posix_time::microsec_clock::local_time();
+  boost::posix_time::ptime frame_start = boost::posix_time::microsec_clock::local_time();
   do {
     steps = cpu.step();
-    gpu.step(steps);
+    gpu.step(3*steps);
 
     if (gpu.interrupt_requested()) {
       cpu.raise_interrupt();
@@ -56,8 +57,16 @@ int main(int argc, char** argv) {
       cpu.drop_interrupt();
     }
 
-    count += steps;
-    if (count > 200000) count = 0;
+    count += 3*steps;
+
+    if (count > GPU_CYCLES_PER_FRAME) {
+      boost::posix_time::ptime frame_end = boost::posix_time::microsec_clock::local_time();
+
+      extratime = ((1000000L/FRAMERATE) - (frame_end - frame_start).total_microseconds());
+
+      frame_start = boost::posix_time::microsec_clock::local_time();
+      count = 0;
+    }
 
   } while ((count != 0) || !win.check_exit());  // Check for window close every frame or so
 
